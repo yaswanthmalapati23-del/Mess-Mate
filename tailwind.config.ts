@@ -1,0 +1,112 @@
+import type { Config } from "tailwindcss";
+
+const config: Config = {
+  darkMode: "class",
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        canvas: "var(--bg-base)",
+        surface: "var(--card-surface)",
+        ink: "var(--text-main)",
+        mute: "var(--text-muted)",
+        line: "var(--card-border)",
+        obsidian: {
+          950: "#0A0C0E",
+          900: "#0F1115",
+          850: "#14171D",
+          800: "#1A1E24",
+          700: "#242A33",
+          600: "#323B47",
+        },
+        terracotta: {
+          50: "#FDF6F3",
+          100: "#FCECE7",
+          200: "#F7D5C9",
+          300: "#EEB09B",
+          400: "#E28267",
+          500: "#D95D39",
+          600: "#C85A32",
+          700: "#A94323",
+          800: "#89381F",
+          900: "#70311D",
+          950: "#3F1C12",
+        },
+        saffron: {
+          50: "#FEF9EE",
+          100: "#FDF0D4",
+          200: "#FBE0A9",
+          300: "#F7CA75",
+          400: "#F2AF42",
+          500: "#E09F3E",
+          600: "#C47F29",
+          700: "#9C5E22",
+          950: "#3D2A10",
+        },
+        olive: {
+          50: "#F4F6F4",
+          100: "#E6ECE6",
+          200: "#CCD7CD",
+          300: "#AABCAE",
+          400: "#7F9B86",
+          500: "#5D7B65",
+          600: "#445C4B",
+          700: "#36493C",
+          800: "#2D3830",
+          900: "#222B25",
+        },
+        parchment: {
+          50: "#FAF9F6",
+          100: "#F4F1EB",
+          200: "#ECE7DD",
+          300: "#DDD4C5",
+          400: "#C9BDAA",
+        },
+        nourish: {
+          primary: "#1B5E4A",
+          dark: "#004534",
+          mint: "#D8E8DE",
+          mintFixed: "#AEF0D6",
+          mintContainer: "#D6E6DC",
+          cream: "#FBF9F4",
+          surfaceLow: "#F5F3EE",
+          surfaceHigh: "#EAE8E3",
+          textDark: "#143026",
+          textMuted: "#5F7A6E",
+          outline: "#A9BFB5",
+          errorContainer: "#FFDAD6",
+          error: "#BA1A1A",
+        },
+      },
+      fontFamily: {
+        display: ["var(--font-display)", "Georgia", "serif"],
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+      },
+      boxShadow: {
+        "glow-terracotta": "0 12px 40px -16px rgba(200, 90, 50, 0.45)",
+        "glow-saffron": "0 12px 40px -16px rgba(224, 159, 62, 0.35)",
+      },
+      keyframes: {
+        ringfill: {
+          from: { strokeDashoffset: "var(--ring-from)" },
+          to: { strokeDashoffset: "var(--ring-to)" },
+        },
+        logpop: {
+          "0%": { transform: "scale(0.92)", opacity: "0.4" },
+          "60%": { transform: "scale(1.04)" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
+      },
+      animation: {
+        ringfill: "ringfill 0.9s cubic-bezier(0.22, 1, 0.36, 1) both",
+        logpop: "logpop 0.45s cubic-bezier(0.22, 1, 0.36, 1) both",
+      },
+    },
+  },
+  plugins: [],
+};
+export default config;

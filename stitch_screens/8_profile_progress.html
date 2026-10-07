@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-dim": "#dbdad5", "on-secondary-fixed": "#111e18", "on-primary": "#ffffff", "on-tertiary-fixed-variant": "#324c41", "on-background": "#1b1c19", "surface-container-highest": "#e4e2dd", "on-primary-container": "#94d5bc", "tertiary-fixed-dim": "#b0cdbf", "outline-variant": "#bfc9c3", "tertiary": "#284237", "primary-fixed": "#aef0d6", "inverse-on-surface": "#f2f1ec", "primary-fixed-dim": "#93d4ba", "on-secondary": "#ffffff", "secondary-fixed": "#d6e6dc", "error-container": "#ffdad6", "surface-container-high": "#eae8e3", "surface-container-low": "#f5f3ee", "error": "#ba1a1a", "surface-container": "#f0eee9", "on-surface-variant": "#404944", "on-error": "#ffffff", "on-tertiary-container": "#b1cec0", "surface-bright": "#fbf9f4", "on-tertiary-fixed": "#052017", "surface-variant": "#e4e2dd", "tertiary-fixed": "#cce9db", "surface-tint": "#286955", "on-secondary-container": "#596860", "secondary-container": "#d6e6dc", "tertiary-container": "#3f594e", "primary": "#004534", "outline": "#707974", "secondary-fixed-dim": "#bacac1", "on-secondary-fixed-variant": "#3c4a43", "on-primary-fixed-variant": "#06513e", "primary-container": "#1b5e4a", "surface-container-lowest": "#ffffff", "secondary": "#53625a", "background": "#fbf9f4", "inverse-surface": "#30312e", "on-error-container": "#93000a", "surface": "#fbf9f4", "on-primary-fixed": "#002117", "on-tertiary": "#ffffff", "inverse-primary": "#93d4ba", "on-surface": "#1b1c19" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "space-xl": "1.75rem", "space-xs": "0.25rem", "margin": "1rem", "space-md": "1rem", "gutter": "1rem", "space-lg": "1.25rem" }, fontFamily: { "display-lg": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "title-lg": ["Plus Jakarta Sans"], "stat-numeral-sm": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "stat-numeral-lg": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"] }, fontSize: { "display-lg": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }], "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }], "title-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }], "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }], "title-lg": ["16px", { lineHeight: "22px", fontWeight: "600" }], "stat-numeral-sm": ["20px", { lineHeight: "24px", letterSpacing: "-0.02em", fontWeight: "700" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.03em", fontWeight: "600" }], "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }], "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "700" }], "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" }], "stat-numeral-lg": ["32px", { lineHeight: "36px", letterSpacing: "-0.03em", fontWeight: "800" }], "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500" }], "headline-md": ["22px", { lineHeight: "28px", fontWeight: "600" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(20,48,38,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Mess Mate Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VLHJCZ96eHYlP6WUD8NjMs7c5yyn4IkD5lPzJk2M3OnyV5WmT7ZBK3gxMNg8u-KYYiquaAdETbb97AnbZpVeOBlxgxGxMuUr_AtXYtoGK__QIODy_xWgRtFrxC-jqQLl71iv3Gt3YRIB9pn0EewkrtU75PEen-7pcC1sTumCKNTYAkjOXl5Q9DHEp4Vsu9rJFD7tWdZYr8NkkcBsxJvS3XPUWzCkWjVN58k6IztGHOuivBuwOmLeHtPw"/><div class="flex flex-col"><span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">VIT-AP University</span><h1 class="font-title-lg text-title-lg text-on-surface">Profile</h1></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center rounded-full text-secondary hover:text-on-surface hover:bg-secondary-container/40 transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full px-margin space-y-space-lg pb-space-xl">
+<!-- Profile Header Card (Architectural Arch Silhouette) -->
+<div class="relative bg-surface-container-lowest rounded-t-[40px] rounded-b-lg p-space-lg shadow-sm overflow-hidden">
+<div class="absolute -right-10 -top-10 w-36 h-36 rounded-full bg-secondary-container/40 pointer-events-none"></div>
+<div class="flex items-start gap-space-md relative z-10">
+<!-- Monogram Avatar -->
+<div class="w-16 h-16 rounded-full bg-secondary-container flex items-center justify-center shrink-0 shadow-inner">
+<span class="font-headline-md text-headline-md text-primary-container">AK</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h2 class="font-headline-sm text-headline-sm text-on-surface truncate">Aditi Kulkarni</h2>
+<span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-secondary-container text-primary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+            Student
+          </span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">22BCE8921 • Block-2 Hostel (LH-1)</p>
+<div class="mt-space-sm flex items-center gap-space-xs">
+<span class="inline-flex items-center gap-1 text-primary-container font-label-sm text-label-sm bg-surface-container px-2.5 py-1 rounded-full">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">eco</span>
+            Veg + Eggs
+          </span>
+<span class="inline-flex items-center gap-1 text-secondary font-label-sm text-label-sm bg-surface-container px-2.5 py-1 rounded-full">
+            CRCL Caterer
+          </span>
+</div>
+</div>
+<button aria-label="Edit Profile" class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-primary-container hover:bg-secondary-container transition-colors shrink-0">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</button>
+</div>
+<!-- Quick Micro Milestone Pill -->
+<div class="mt-space-md p-space-sm bg-surface-container-low rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">workspace_premium</span>
+</span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Campus Wellness Level 4</span>
+<span class="font-label-sm text-label-sm text-secondary">Logged 42 wholesome meals this month</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-semibold">920 XP</span>
+</div>
+</div>
+<!-- Weekly Compliance Visual Chart -->
+<div class="bg-surface-container-lowest rounded-lg p-space-lg shadow-sm">
+<div class="flex items-center justify-between mb-space-md">
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">Calorie &amp; Macro Adherence</h3>
+<p class="font-label-sm text-label-sm text-secondary">Past 7 days mess intake vs target</p>
+</div>
+<span class="inline-flex items-center px-2 py-1 rounded-full bg-secondary-container text-primary-container font-label-sm text-label-sm font-semibold">
+        92% on target
+      </span>
+</div>
+<!-- Micro Bar Graph -->
+<div class="flex items-end justify-between gap-2 h-36 pt-4 pb-1">
+<!-- Mon -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-label-sm text-[10px] text-secondary">1.8k</span>
+<div class="w-full max-w-[28px] bg-secondary-container rounded-t-full h-24 flex items-end justify-center p-0.5">
+<div class="w-full bg-primary-container rounded-t-full h-20 transition-all duration-500"></div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">M</span>
+</div>
+<!-- Tue -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-label-sm text-[10px] text-secondary">1.9k</span>
+<div class="w-full max-w-[28px] bg-secondary-container rounded-t-full h-24 flex items-end justify-center p-0.5">
+<div class="w-full bg-primary-container rounded-t-full h-22 transition-all duration-500"></div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">T</span>
+</div>
+<!-- Wed -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-label-sm text-[10px] text-secondary">1.7k</span>
+<div class="w-full max-w-[28px] bg-secondary-container rounded-t-full h-24 flex items-end justify-center p-0.5">
+<div class="w-full bg-primary-container rounded-t-full h-16 transition-all duration-500"></div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">W</span>
+</div>
+<!-- Thu -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-label-sm text-[10px] text-secondary">1.8k</span>
+<div class="w-full max-w-[28px] bg-secondary-container rounded-t-full h-24 flex items-end justify-center p-0.5">
+<div class="w-full bg-primary-container rounded-t-full h-21 transition-all duration-500"></div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">T</span>
+</div>
+<!-- Fri -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-label-sm text-[10px] text-secondary">1.9k</span>
+<div class="w-full max-w-[28px] bg-secondary-container rounded-t-full h-24 flex items-end justify-center p-0.5">
+<div class="w-full bg-primary-container rounded-t-full h-24 transition-all duration-500"></div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">F</span>
+</div>
+<!-- Sat -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-label-sm text-[10px] text-secondary">2.0k</span>
+<div class="w-full max-w-[28px] bg-secondary-container rounded-t-full h-24 flex items-end justify-center p-0.5">
+<div class="w-full bg-primary-container rounded-t-full h-18 transition-all duration-500"></div>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">S</span>
+</div>
+<!-- Sun (Today / Active) -->
+<div class="flex-1 flex flex-col items-center gap-1.5 h-full justify-end">
+<span class="font-label-sm text-[10px] text-primary-container font-semibold">1.8k</span>
+<div class="w-full max-w-[28px] bg-secondary-container rounded-t-full h-24 flex items-end justify-center p-0.5 shadow-sm">
+<div class="w-full bg-primary rounded-t-full h-20 transition-all duration-500"></div>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-bold">S</span>
+</div>
+</div>
+<!-- Macro Distribution Ticker -->
+<div class="mt-space-md pt-space-sm flex items-center justify-between bg-surface-container-low rounded-xl px-space-md py-space-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Protein 84g</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Carbs 210g</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span>
+<span class="font-label-sm text-label-sm text-on-surface">Fats 48g</span>
+</div>
+</div>
+</div>
+<!-- Progress & Streak Grid (2-Column Cards) -->
+<div class="grid grid-cols-2 gap-space-md">
+<!-- Streak Card -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">local_fire_department</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-bold bg-secondary-container/60 px-2 py-0.5 rounded-full">Top 5%</span>
+</div>
+<div class="mt-space-md">
+<div class="font-stat-numeral-sm text-stat-numeral-sm text-on-surface">14 Days 🔥</div>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5 line-clamp-2">Consistent campus mess logging</p>
+</div>
+</div>
+<!-- Average Daily Intake -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">nutrition</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-bold">92%</span>
+</div>
+<div class="mt-space-md">
+<div class="font-stat-numeral-sm text-stat-numeral-sm text-on-surface">1,840 kcal</div>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5 line-clamp-2">Avg daily intake target</p>
+</div>
+</div>
+<!-- Current Goal -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]">flag</span>
+</div>
+<button aria-label="Edit Calorie Goal" class="text-secondary hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+</div>
+<div class="mt-space-md">
+<div class="font-title-md text-title-md text-on-surface">Deficit Goal</div>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">-350 kcal/day (Fat Loss)</p>
+</div>
+</div>
+<!-- Water Tracked -->
+<div class="bg-surface-container-lowest rounded-lg p-space-md shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center text-primary-container">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+</div>
+<span class="font-label-sm text-label-sm text-primary-container font-bold">80%</span>
+</div>
+<div class="mt-space-md">
+<div class="font-stat-numeral-sm text-stat-numeral-sm text-on-surface">2.4 / 3.0 L</div>
+<div class="w-full bg-surface-container rounded-full h-1.5 mt-2 overflow-hidden">
+<div class="bg-primary-container h-full rounded-full w-4/5"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Dining & App Settings Group -->
+<div class="space-y-space-sm">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider px-space-xs">Hostel &amp; Meal Preferences</span>
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm">
+<!-- Caterer Setting -->
+<button class="w-full p-space-md flex items-center justify-between hover:bg-surface-container-low transition-colors text-left">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined text-[20px]">apartment</span>
+</div>
+<div>
+<div class="font-title-md text-title-md text-on-surface">Hostel &amp; Caterer</div>
+<div class="font-body-sm text-body-sm text-secondary">Block 2 • CRCL Caterers</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
+</button>
+<div class="h-px bg-surface-container-high mx-space-md"></div>
+<!-- Dietary Preference -->
+<button class="w-full p-space-md flex items-center justify-between hover:bg-surface-container-low transition-colors text-left">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined text-[20px]">restaurant</span>
+</div>
+<div>
+<div class="font-title-md text-title-md text-on-surface">Dietary Preference</div>
+<div class="font-body-sm text-body-sm text-secondary">Vegetarian + Daily Egg option</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
+</button>
+<div class="h-px bg-surface-container-high mx-space-md"></div>
+<!-- Macro Calculator -->
+<button class="w-full p-space-md flex items-center justify-between hover:bg-surface-container-low transition-colors text-left">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined text-[20px]">calculate</span>
+</div>
+<div>
+<div class="font-title-md text-title-md text-on-surface">Macro Target Calculator</div>
+<div class="font-body-sm text-body-sm text-secondary">Re-calculate carbs, protein, and calories</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
+</button>
+<div class="h-px bg-surface-container-high mx-space-md"></div>
+<!-- Grievance Portal -->
+<button class="w-full p-space-md flex items-center justify-between hover:bg-surface-container-low transition-colors text-left">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center text-primary-container shrink-0">
+<span class="material-symbols-outlined text-[20px]">rate_review</span>
+</div>
+<div>
+<div class="font-title-md text-title-md text-on-surface">Mess Food Feedback &amp; Grievance</div>
+<div class="font-body-sm text-body-sm text-secondary">Direct link to VIT-AP Student Dining Council</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px]">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- Account & Support Actions -->
+<div class="space-y-space-sm">
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider px-space-xs">App &amp; Account</span>
+<div class="bg-surface-container-lowest rounded-lg overflow-hidden shadow-sm">
+<button class="w-full p-space-md flex items-center justify-between hover:bg-surface-container-low transition-colors text-left">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-secondary shrink-0">
+<span class="material-symbols-outlined text-[20px]">notifications_active</span>
+</div>
+<div>
+<div class="font-title-md text-title-md text-on-surface">Mess Reminders &amp; Meal Timing</div>
+<div class="font-body-sm text-body-sm text-secondary">Breakfast alert at 7:30 AM</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-secondary text-[20px]">chevron_right</span>
+</button>
+<div class="h-px bg-surface-container-high mx-space-md"></div>
+<!-- Sign Out Action -->
+<button class="w-full p-space-md flex items-center justify-between hover:bg-error-container/20 transition-colors text-left group">
+<div class="flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-error-container/40 flex items-center justify-center text-error shrink-0">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+</div>
+<div>
+<div class="font-title-md text-title-md text-error">Sign Out / Switch Profile</div>
+<div class="font-body-sm text-body-sm text-secondary">Logged in with VIT-AP VTOP Credentials</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-error text-[20px]">arrow_forward</span>
+</button>
+</div>
+</div>
+<!-- Collegiate Footer Info -->
+<div class="flex flex-col items-center justify-center pt-space-sm pb-space-sm text-center">
+<div class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-[16px] text-primary-container">spa</span>
+<span class="font-label-md text-label-md text-secondary">Mess Mate v2.4.1 (Campus Edition)</span>
+</div>
+<span class="font-label-sm text-label-sm text-outline mt-1">Crafted for wholesome campus living at VIT-AP University</span>
+</div>
+</div>
+<script>
+  // Highlighting active profile tab in bottom app bar dynamically
+  (function initActiveNavigation() {
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+      if (link.getAttribute('data-path') === 'profile') {
+        link.className = "flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full bg-secondary-container text-primary-container font-semibold transition-all duration-200 shadow-sm";
+        const icon = link.querySelector('.material-symbols-outlined');
+        if (icon) icon.style.fontVariationSettings = "'FILL' 1";
+      } else {
+        link.className = "flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full text-secondary hover:text-primary transition-all duration-200";
+        const icon = link.querySelector('.material-symbols-outlined');
+        if (icon) icon.style.fontVariationSettings = "'FILL' 0";
+      }
+    });
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_20px_rgba(20,48,38,0.06)]" data-active-classes="bg-secondary-container text-primary-container font-semibold"><div class="h-16 px-space-sm flex items-center justify-around"><a class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full text-secondary hover:text-primary transition-all duration-200" data-path="home" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm mt-0.5">Home</span></a><a class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full text-secondary hover:text-primary transition-all duration-200" data-path="menu" href="#"><span class="material-symbols-outlined text-[24px]">restaurant_menu</span><span class="font-label-sm text-label-sm mt-0.5">Menu</span></a><a class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full text-secondary hover:text-primary transition-all duration-200" data-path="explore" href="#"><span class="material-symbols-outlined text-[24px]">explore</span><span class="font-label-sm text-label-sm mt-0.5">Explore</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full transition-all duration-200 bg-secondary-container text-primary-container font-semibold" data-path="profile" href="#"><span class="material-symbols-outlined text-[24px]">account_circle</span><span class="font-label-sm text-label-sm mt-0.5">Profile</span></a></div></nav></body></html>

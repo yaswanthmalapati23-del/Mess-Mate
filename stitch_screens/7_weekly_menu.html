@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-dim": "#dbdad5", "on-secondary-fixed": "#111e18", "on-primary": "#ffffff", "on-tertiary-fixed-variant": "#324c41", "on-background": "#1b1c19", "surface-container-highest": "#e4e2dd", "on-primary-container": "#94d5bc", "tertiary-fixed-dim": "#b0cdbf", "outline-variant": "#bfc9c3", "tertiary": "#284237", "primary-fixed": "#aef0d6", "inverse-on-surface": "#f2f1ec", "primary-fixed-dim": "#93d4ba", "on-secondary": "#ffffff", "secondary-fixed": "#d6e6dc", "error-container": "#ffdad6", "surface-container-high": "#eae8e3", "surface-container-low": "#f5f3ee", "error": "#ba1a1a", "surface-container": "#f0eee9", "on-surface-variant": "#404944", "on-error": "#ffffff", "on-tertiary-container": "#b1cec0", "surface-bright": "#fbf9f4", "on-tertiary-fixed": "#052017", "surface-variant": "#e4e2dd", "tertiary-fixed": "#cce9db", "surface-tint": "#286955", "on-secondary-container": "#596860", "secondary-container": "#d6e6dc", "tertiary-container": "#3f594e", "primary": "#004534", "outline": "#707974", "secondary-fixed-dim": "#bacac1", "on-secondary-fixed-variant": "#3c4a43", "on-primary-fixed-variant": "#06513e", "primary-container": "#1b5e4a", "surface-container-lowest": "#ffffff", "secondary": "#53625a", "background": "#fbf9f4", "inverse-surface": "#30312e", "on-error-container": "#93000a", "surface": "#fbf9f4", "on-primary-fixed": "#002117", "on-tertiary": "#ffffff", "inverse-primary": "#93d4ba", "on-surface": "#1b1c19" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "space-xl": "1.75rem", "space-xs": "0.25rem", "margin": "1rem", "space-md": "1rem", "gutter": "1rem", "space-lg": "1.25rem" }, fontFamily: { "display-lg": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "title-lg": ["Plus Jakarta Sans"], "stat-numeral-sm": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "stat-numeral-lg": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"] }, fontSize: { "display-lg": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }], "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }], "title-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }], "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }], "title-lg": ["16px", { lineHeight: "22px", fontWeight: "600" }], "stat-numeral-sm": ["20px", { lineHeight: "24px", letterSpacing: "-0.02em", fontWeight: "700" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.03em", fontWeight: "600" }], "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }], "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "700" }], "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" }], "stat-numeral-lg": ["32px", { lineHeight: "36px", letterSpacing: "-0.03em", fontWeight: "800" }], "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500" }], "headline-md": ["22px", { lineHeight: "28px", fontWeight: "600" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(20,48,38,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Mess Mate Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VLHJCZ96eHYlP6WUD8NjMs7c5yyn4IkD5lPzJk2M3OnyV5WmT7ZBK3gxMNg8u-KYYiquaAdETbb97AnbZpVeOBlxgxGxMuUr_AtXYtoGK__QIODy_xWgRtFrxC-jqQLl71iv3Gt3YRIB9pn0EewkrtU75PEen-7pcC1sTumCKNTYAkjOXl5Q9DHEp4Vsu9rJFD7tWdZYr8NkkcBsxJvS3XPUWzCkWjVN58k6IztGHOuivBuwOmLeHtPw"/><div class="flex flex-col"><span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">VIT-AP University</span><h1 class="font-title-lg text-title-lg text-on-surface">Menu</h1></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center rounded-full text-secondary hover:text-on-surface hover:bg-secondary-container/40 transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full">
+<div class="px-margin pt-space-sm pb-space-xs flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Weekly Mess Menu</span>
+<span class="font-label-md text-label-md text-secondary">October 2024 • Cycle A Menu</span>
+</div>
+<button aria-label="Select mess hall" class="flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-secondary-container text-on-secondary-container font-label-md text-label-md active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[16px] text-primary">storefront</span>
+<span class="truncate max-w-[130px]">Central Mess (B)</span>
+<span class="material-symbols-outlined text-[16px]">expand_more</span>
+</button>
+</div>
+</div>
+<!-- Day Selector Carousel -->
+<div class="w-full overflow-x-auto no-scrollbar py-space-sm px-margin">
+<div class="flex items-center gap-space-xs min-w-max" id="day-selector">
+<button class="day-tab flex flex-col items-center justify-center w-[54px] h-[66px] rounded-lg bg-surface-container-lowest text-secondary active:scale-95 transition-all">
+<span class="font-label-sm text-label-sm font-semibold uppercase">Mon</span>
+<span class="font-stat-numeral-sm text-stat-numeral-sm mt-0.5">21</span>
+</button>
+<button class="day-tab flex flex-col items-center justify-center w-[54px] h-[66px] rounded-lg bg-surface-container-lowest text-secondary active:scale-95 transition-all">
+<span class="font-label-sm text-label-sm font-semibold uppercase">Tue</span>
+<span class="font-stat-numeral-sm text-stat-numeral-sm mt-0.5">22</span>
+</button>
+<button class="day-tab active-day relative flex flex-col items-center justify-center w-[58px] h-[70px] rounded-lg bg-primary text-on-primary shadow-sm active:scale-95 transition-all">
+<span class="absolute top-1.5 w-1.5 h-1.5 rounded-full bg-primary-fixed"></span>
+<span class="font-label-sm text-label-sm font-semibold uppercase text-primary-fixed mt-1">Wed</span>
+<span class="font-stat-numeral-sm text-stat-numeral-sm">23</span>
+<span class="font-label-sm text-[9px] uppercase tracking-tighter opacity-90">Today</span>
+</button>
+<button class="day-tab flex flex-col items-center justify-center w-[54px] h-[66px] rounded-lg bg-surface-container-lowest text-secondary active:scale-95 transition-all">
+<span class="font-label-sm text-label-sm font-semibold uppercase">Thu</span>
+<span class="font-stat-numeral-sm text-stat-numeral-sm mt-0.5">24</span>
+</button>
+<button class="day-tab flex flex-col items-center justify-center w-[54px] h-[66px] rounded-lg bg-surface-container-lowest text-secondary active:scale-95 transition-all">
+<span class="font-label-sm text-label-sm font-semibold uppercase">Fri</span>
+<span class="font-stat-numeral-sm text-stat-numeral-sm mt-0.5">25</span>
+</button>
+<button class="day-tab flex flex-col items-center justify-center w-[54px] h-[66px] rounded-lg bg-surface-container-lowest text-secondary active:scale-95 transition-all">
+<span class="font-label-sm text-label-sm font-semibold uppercase">Sat</span>
+<span class="font-stat-numeral-sm text-stat-numeral-sm mt-0.5">26</span>
+</button>
+<button class="day-tab flex flex-col items-center justify-center w-[54px] h-[66px] rounded-lg bg-surface-container-lowest text-secondary active:scale-95 transition-all">
+<span class="font-label-sm text-label-sm font-semibold uppercase">Sun</span>
+<span class="font-stat-numeral-sm text-stat-numeral-sm mt-0.5">27</span>
+</button>
+</div>
+</div>
+<div class="px-margin flex flex-col gap-space-md mt-space-xs">
+<!-- Special Meal Highlight Alert (Arch top silhouette) -->
+<div class="relative overflow-hidden rounded-t-[32px] rounded-b-[20px] bg-secondary-container p-space-md text-on-secondary-container shadow-sm">
+<div class="flex items-start gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-primary flex items-center justify-center shrink-0 mt-0.5 text-on-primary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+</div>
+<div class="flex flex-col flex-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-primary font-bold">Special Feast Tonight</span>
+<span class="font-label-sm text-label-sm bg-surface-container-lowest text-primary px-space-xs py-0.5 rounded-full font-semibold">Special</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-secondary-container mt-1">
+            Wednesday Dinner features rich <strong class="text-on-surface">Paneer Butter Masala</strong> &amp; slow-cooked <strong class="text-on-surface">Chicken Biryani</strong> for non-veg subscribers.
+          </p>
+</div>
+</div>
+</div>
+<!-- Active Filter/Dietary Preference Chips -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-0.5">
+<button class="px-space-md py-1.5 rounded-full bg-primary text-on-primary font-label-md text-label-md whitespace-nowrap shadow-sm">
+        All Items
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-secondary font-label-md text-label-md whitespace-nowrap">
+        Pure Veg
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-secondary font-label-md text-label-md whitespace-nowrap">
+        High Protein
+      </button>
+<button class="px-space-md py-1.5 rounded-full bg-surface-container-lowest text-secondary font-label-md text-label-md whitespace-nowrap">
+        Nutrition Focus
+      </button>
+</div>
+<!-- Meal Schedule Cards -->
+<div class="flex flex-col gap-space-md pb-space-lg">
+<!-- Card 1: Breakfast -->
+<div class="rounded-[24px] bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-sm transition-all">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">1</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-lg text-title-lg text-on-surface">Breakfast</span>
+<span class="font-label-sm text-label-sm text-secondary">07:30 AM – 09:30 AM</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-semibold bg-surface-container px-space-sm py-1 rounded-full text-secondary">
+            420-550 kcal
+          </span>
+</div>
+<div class="w-full h-32 rounded-lg overflow-hidden relative mt-1">
+<img class="w-full h-full object-cover" data-alt="South Indian breakfast platter with crisp golden Mysore Masala Dosa folded with potato filling, accompanied by two small ceramic bowls of coconut chutney and spiced tomato chutney, garnished with fresh cilantro on a rustic cream-toned tray under natural morning sun." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA81Egym9i6IQ57niEJYBDzeR20dL1BuJJkYy-D6ggDKz6_VZW1t_KaTkvLx4G9DJndmseyKVde95assXj9dC_1Px4_YSjFw5TwL7DCrZQ1M8VIUSZ9x97QjagAlSJBZwwVebMcCFJxX0IIpZQtx0NqILwP_tGAg_iUBrF2yAxw8997VM6vSUXDXw6dhE7UZV3wszc6O1J1SCYcxJJgKWtjsLo_PhDV79eLt981FaBAYtTtk84vbrja"/>
+<div class="absolute bottom-2 left-2 bg-surface-container-lowest/90 backdrop-blur-md px-space-sm py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+<span class="material-symbols-outlined text-[14px] text-primary" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span class="font-label-sm text-[10px] text-primary font-bold uppercase tracking-wider">Chef Special</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 pt-1">
+<div class="flex items-start justify-between gap-space-sm">
+<span class="font-title-md text-title-md text-on-surface font-semibold">Mysore Masala Dosa &amp; Sambar</span>
+<span class="font-label-sm text-[11px] text-primary bg-secondary-container px-1.5 py-0.5 rounded-full shrink-0 font-medium">Macro Plate</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary">
+            Coconut Chutney, Tangy Tomato Chutney, Boiled Moong Sprouts, Fresh Robusta Banana, South Indian Filter Coffee / Tea.
+          </p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between mt-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">fitness_center</span>
+<span class="font-label-sm text-label-sm text-on-surface">High Fiber &amp; Natural Electrolytes</span>
+</div>
+<span class="font-label-sm text-label-sm font-bold text-primary">14g Protein</span>
+</div>
+</div>
+<!-- Card 2: Lunch (Featured Architecture Silhouette) -->
+<div class="rounded-t-[36px] rounded-b-[20px] bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">2</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-title-lg text-title-lg text-on-surface">Lunch</span>
+<span class="w-2 h-2 rounded-full bg-primary-fixed-dim"></span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">12:30 PM – 02:30 PM</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-semibold bg-surface-container px-space-sm py-1 rounded-full text-secondary">
+            580-720 kcal
+          </span>
+</div>
+<div class="w-full h-32 rounded-lg overflow-hidden relative mt-1">
+<img class="w-full h-full object-cover" data-alt="Traditional Indian university mess lunch thali with warm steamed basmati rice, golden yellow dal fry in a bowl, soft phulkas, fresh vegetable poriyal with grated coconut, cucumber and tomato salad, crisp papad, set against warm cream collegiate backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBADcuf6ZJGcknRZ1o_fcC4rdxvG7VPua5_xgXu_BqnD3b_AiJ31ktPaQTXDPFYzGPFvWOUMLWjdWJgF5FcAyPg5ZfvBSXVAL66pnirHo_SCgletqNzjf8eQmkBj_bvazBR9N9vsHSc89eTByaHiW7VPBrkn4qnd0axydbv0qsW75ivoaLIUm5GjYgPSwDVQKRJuOGKBccYMO0GflVJa-QOTlG6NY8hLGLmkhn3oMdnpiUOnX9ei8eJ"/>
+<div class="absolute top-2 right-2 bg-surface-container-lowest/90 backdrop-blur-md px-space-sm py-0.5 rounded-full text-secondary font-label-sm text-[10px]">
+            Wholesome Thali
+          </div>
+</div>
+<div class="flex flex-col gap-1.5 pt-1">
+<span class="font-title-md text-title-md text-on-surface font-semibold">Steamed Basmati Rice &amp; Dal Fry</span>
+<p class="font-body-sm text-body-sm text-secondary">
+            Whole Wheat Chapati (3 pcs), Mixed Vegetable Poriyal, Curd (Dahi), Pepper Rasam, Roasted Urad Papad, Fresh Cucumber &amp; Beetroot Salad.
+          </p>
+</div>
+<!-- Balanced Nutrition Breakdown Bar -->
+<div class="flex flex-col gap-1 pt-1">
+<div class="flex justify-between font-label-sm text-label-sm text-secondary">
+<span>Macro Balance</span>
+<span class="text-primary font-semibold">22g P • 88g C • 16g F</span>
+</div>
+<div class="h-2 w-full rounded-full bg-secondary-container overflow-hidden flex">
+<div class="h-full bg-primary rounded-l-full" style="width: 25%"></div>
+<div class="h-full bg-surface-tint" style="width: 55%"></div>
+<div class="h-full bg-tertiary-fixed-dim rounded-r-full" style="width: 20%"></div>
+</div>
+</div>
+</div>
+<!-- Card 3: Snacks -->
+<div class="rounded-[24px] bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">3</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-lg text-title-lg text-on-surface">Evening Snacks</span>
+<span class="font-label-sm text-label-sm text-secondary">05:00 PM – 06:00 PM</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-semibold bg-surface-container px-space-sm py-1 rounded-full text-secondary">
+            200-280 kcal
+          </span>
+</div>
+<div class="flex flex-col gap-1 pt-1">
+<span class="font-title-md text-title-md text-on-surface font-semibold">Crispy Veg Cutlet &amp; Corn Chaat</span>
+<p class="font-body-sm text-body-sm text-secondary">
+            Crusty spiced Vegetable Cutlet served with fresh Mint-Coriander Dip, Warm Buttered Sweet Corn Chaat, freshly brewed Cardamom Milk Tea &amp; Filter Coffee.
+          </p>
+</div>
+<div class="flex items-center justify-between text-secondary pt-1">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-tertiary">local_cafe</span>
+<span class="font-label-sm text-label-sm">Hot Beverage Counters Open</span>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container-high px-2 py-0.5 rounded-full text-on-surface font-medium">Quick Refresh</span>
+</div>
+</div>
+<!-- Card 4: Dinner (With Highlight Indicator) -->
+<div class="rounded-[24px] bg-surface-container-lowest p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="font-headline-sm text-headline-sm text-primary font-bold">4</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-title-lg text-title-lg text-on-surface">Grand Dinner</span>
+<span class="font-label-sm text-[10px] bg-error-container text-on-error-container px-1.5 py-0.2 rounded-full font-bold">Special</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">07:30 PM – 09:30 PM</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm font-semibold bg-surface-container px-space-sm py-1 rounded-full text-secondary">
+            550-680 kcal
+          </span>
+</div>
+<div class="w-full h-32 rounded-lg overflow-hidden relative mt-1">
+<img class="w-full h-full object-cover" data-alt="University dining hall dinner buffet showcasing butter paneer masala in a copper karahi, steamed jeera rice sprinkled with fresh coriander, soft hot phulkas stacked, and a bowl of rich slow-simmered dal makhani on a clean rustic dining counter." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkPBhisu7B5chr8ItcEnCNKyE_zt_-1A88nFwO-RX7X83f5CzcrR_smNm8so41145p6WyPyoe-2R6REhY1uD_IjLG9YYbtgdigk3ogmHfLQ58KIHUJZ05rc4zJ6DxKJlNEdRS7D-tEPbBuS6HDHYLeL9hORbbOyplMMEEn_ZR1Rcqg6c-sBge3Oc6sm9FWTw0KsNskXxK2tsOt-7tANn7znR-958rbeNN9rFJSOFR1Ns6Sz1_HCcmq"/>
+<div class="absolute bottom-2 right-2 bg-primary text-on-primary font-label-sm text-[10px] px-2 py-0.5 rounded-full font-semibold shadow-sm">
+            Both Veg &amp; Non-Veg
+          </div>
+</div>
+<div class="flex flex-col gap-1.5 pt-1">
+<span class="font-title-md text-title-md text-on-surface font-semibold">Paneer Butter Masala / Chicken Biryani</span>
+<p class="font-body-sm text-body-sm text-secondary">
+            Soft Butter Phulka, Fragrant Jeera Basmati Rice, Creamy Dal Makhani, Paneer Kadai or Handi Chicken Curry (Non-veg pass holders), Mint Raita, Fresh Cut Fruit Salad.
+          </p>
+</div>
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">volunteer_activism</span>
+<span class="font-label-sm text-label-sm text-on-surface">Subscribed Add-on Available</span>
+</div>
+<button class="font-label-sm text-label-sm font-bold text-primary underline underline-offset-2">View Add-ons</button>
+</div>
+</div>
+</div>
+<!-- Student Feedback & Meal Skip Callout -->
+<div class="bg-surface-container-high rounded-[20px] p-space-md flex items-center justify-between mb-space-xl">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary shadow-sm">
+<span class="material-symbols-outlined text-[20px]">no_meals</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">Skipping a meal?</span>
+<span class="font-body-sm text-body-sm text-secondary">Notify mess by 4:00 PM to save food waste.</span>
+</div>
+</div>
+<button class="px-space-md py-2 rounded-full bg-surface-container-lowest text-primary font-label-md text-label-md shadow-sm active:scale-95 transition-transform shrink-0">
+        Mark Skip
+      </button>
+</div>
+</div>
+</div>
+<script>
+  // Ensure the Menu tab in the shell bottom navigation is highlighted with mint pill styling
+  document.addEventListener('DOMContentLoaded', () => {
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+      if (link.getAttribute('data-path') === 'menu') {
+        link.classList.remove('text-secondary');
+        link.classList.add('bg-secondary-container', 'text-primary', 'font-semibold');
+        const icon = link.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.style.fontVariationSettings = "'FILL' 1";
+        }
+      }
+    });
+
+    // Micro-interaction for Day Selector Pills
+    const dayButtons = document.querySelectorAll('.day-tab');
+    dayButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        dayButtons.forEach(b => {
+          b.className = 'day-tab flex flex-col items-center justify-center w-[54px] h-[66px] rounded-lg bg-surface-container-lowest text-secondary active:scale-95 transition-all';
+          const dot = b.querySelector('.absolute');
+          if (dot) dot.remove();
+          const todayBadge = b.querySelector('span:nth-child(3)');
+          if (todayBadge && todayBadge.textContent.trim().toLowerCase() === 'today') {
+            todayBadge.remove();
+          }
+        });
+        btn.className = 'day-tab active-day relative flex flex-col items-center justify-center w-[58px] h-[70px] rounded-lg bg-primary text-on-primary shadow-sm active:scale-95 transition-all';
+        const dayLabel = btn.querySelector('span:first-child');
+        if (dayLabel) {
+          dayLabel.classList.add('text-primary-fixed');
+        }
+      });
+    });
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_20px_rgba(20,48,38,0.06)]" data-active-classes="bg-secondary-container text-primary-container font-semibold"><div class="h-16 px-space-sm flex items-center justify-around"><a class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full text-secondary hover:text-primary transition-all duration-200" data-path="home" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm mt-0.5">Home</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full transition-all duration-200 bg-secondary-container text-primary-container font-semibold" data-path="menu" href="#"><span class="material-symbols-outlined text-[24px]">restaurant_menu</span><span class="font-label-sm text-label-sm mt-0.5">Menu</span></a><a class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full text-secondary hover:text-primary transition-all duration-200" data-path="explore" href="#"><span class="material-symbols-outlined text-[24px]">explore</span><span class="font-label-sm text-label-sm mt-0.5">Explore</span></a><a class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full text-secondary hover:text-primary transition-all duration-200" data-path="profile" href="#"><span class="material-symbols-outlined text-[24px]">account_circle</span><span class="font-label-sm text-label-sm mt-0.5">Profile</span></a></div></nav></body></html>

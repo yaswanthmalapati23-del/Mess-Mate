@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-dim": "#dbdad5", "on-secondary-fixed": "#111e18", "on-primary": "#ffffff", "on-tertiary-fixed-variant": "#324c41", "on-background": "#1b1c19", "surface-container-highest": "#e4e2dd", "on-primary-container": "#94d5bc", "tertiary-fixed-dim": "#b0cdbf", "outline-variant": "#bfc9c3", "tertiary": "#284237", "primary-fixed": "#aef0d6", "inverse-on-surface": "#f2f1ec", "primary-fixed-dim": "#93d4ba", "on-secondary": "#ffffff", "secondary-fixed": "#d6e6dc", "error-container": "#ffdad6", "surface-container-high": "#eae8e3", "surface-container-low": "#f5f3ee", "error": "#ba1a1a", "surface-container": "#f0eee9", "on-surface-variant": "#404944", "on-error": "#ffffff", "on-tertiary-container": "#b1cec0", "surface-bright": "#fbf9f4", "on-tertiary-fixed": "#052017", "surface-variant": "#e4e2dd", "tertiary-fixed": "#cce9db", "surface-tint": "#286955", "on-secondary-container": "#596860", "secondary-container": "#d6e6dc", "tertiary-container": "#3f594e", "primary": "#004534", "outline": "#707974", "secondary-fixed-dim": "#bacac1", "on-secondary-fixed-variant": "#3c4a43", "on-primary-fixed-variant": "#06513e", "primary-container": "#1b5e4a", "surface-container-lowest": "#ffffff", "secondary": "#53625a", "background": "#fbf9f4", "inverse-surface": "#30312e", "on-error-container": "#93000a", "surface": "#fbf9f4", "on-primary-fixed": "#002117", "on-tertiary": "#ffffff", "inverse-primary": "#93d4ba", "on-surface": "#1b1c19" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "space-xl": "1.75rem", "space-xs": "0.25rem", "margin": "1rem", "space-md": "1rem", "gutter": "1rem", "space-lg": "1.25rem" }, fontFamily: { "display-lg": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "title-lg": ["Plus Jakarta Sans"], "stat-numeral-sm": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "stat-numeral-lg": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"] }, fontSize: { "display-lg": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }], "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }], "title-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }], "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }], "title-lg": ["16px", { lineHeight: "22px", fontWeight: "600" }], "stat-numeral-sm": ["20px", { lineHeight: "24px", letterSpacing: "-0.02em", fontWeight: "700" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.03em", fontWeight: "600" }], "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }], "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "700" }], "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" }], "stat-numeral-lg": ["32px", { lineHeight: "36px", letterSpacing: "-0.03em", fontWeight: "800" }], "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500" }], "headline-md": ["22px", { lineHeight: "28px", fontWeight: "600" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(20,48,38,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-xs"><button aria-label="Go Back" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container-high transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_back</span></button><img alt="Mess Mate Logo" class="h-8 w-auto object-contain hidden sm:block" src="https://lh3.googleusercontent.com/aida/AEtjO1VLHJCZ96eHYlP6WUD8NjMs7c5yyn4IkD5lPzJk2M3OnyV5WmT7ZBK3gxMNg8u-KYYiquaAdETbb97AnbZpVeOBlxgxGxMuUr_AtXYtoGK__QIODy_xWgRtFrxC-jqQLl71iv3Gt3YRIB9pn0EewkrtU75PEen-7pcC1sTumCKNTYAkjOXl5Q9DHEp4Vsu9rJFD7tWdZYr8NkkcBsxJvS3XPUWzCkWjVN58k6IztGHOuivBuwOmLeHtPw"/><h1 class="font-title-lg text-title-lg text-on-surface ml-1">Meal Details</h1></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-32">
+<div class="px-margin pt-space-sm pb-space-xs flex items-center justify-between">
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="inline-flex items-center justify-center w-5 h-5 rounded-full bg-secondary-fixed text-on-secondary-fixed text-[11px] font-bold">MH</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider font-semibold">Central Mess • VIT-AP Campus</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-primary font-bold mt-0.5">South Indian Special</h2>
+</div>
+<div class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-secondary-fixed text-primary font-label-md text-label-md">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">schedule</span>
+<span>12:30 - 2:30 PM</span>
+</div>
+</div>
+<div class="px-margin mt-space-sm">
+<div class="relative overflow-hidden rounded-t-[36px] rounded-b-[24px] bg-surface-container-lowest shadow-md p-space-lg">
+<div class="absolute -top-16 -right-16 w-40 h-40 rounded-full bg-secondary-fixed/50 pointer-events-none"></div>
+<div class="flex items-start justify-between relative z-10">
+<div>
+<span class="font-label-md text-label-md text-secondary uppercase tracking-wider">Suggested Serving</span>
+<div class="flex items-baseline gap-space-xs mt-0.5">
+<span class="font-stat-numeral-lg text-stat-numeral-lg text-primary tracking-tight" id="hero-calories">640</span>
+<span class="font-title-lg text-title-lg text-primary/80 font-medium">kcal</span>
+</div>
+</div>
+<div class="flex items-center gap-1 px-3 py-1.5 rounded-full bg-primary text-on-primary shadow-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span class="font-label-md text-label-md font-semibold">Target Plate</span>
+</div>
+</div>
+<div class="grid grid-cols-3 gap-space-xs mt-space-md pt-space-md bg-surface-container-low rounded-2xl p-space-sm relative z-10">
+<div class="flex flex-col items-center p-space-xs text-center rounded-xl bg-surface-container-lowest shadow-sm">
+<span class="font-label-sm text-label-sm text-secondary font-medium">Protein</span>
+<span class="font-stat-numeral-sm text-stat-numeral-sm text-primary font-bold mt-0.5" id="hero-protein">28g</span>
+<div class="w-full bg-secondary-fixed rounded-full h-1.5 mt-1.5 overflow-hidden">
+<div class="bg-primary h-full rounded-full transition-all duration-300" id="bar-protein" style="width: 78%"></div>
+</div>
+</div>
+<div class="flex flex-col items-center p-space-xs text-center rounded-xl bg-surface-container-lowest shadow-sm">
+<span class="font-label-sm text-label-sm text-secondary font-medium">Carbs</span>
+<span class="font-stat-numeral-sm text-stat-numeral-sm text-secondary font-bold mt-0.5" id="hero-carbs">84g</span>
+<div class="w-full bg-secondary-fixed rounded-full h-1.5 mt-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full transition-all duration-300" id="bar-carbs" style="width: 65%"></div>
+</div>
+</div>
+<div class="flex flex-col items-center p-space-xs text-center rounded-xl bg-surface-container-lowest shadow-sm">
+<span class="font-label-sm text-label-sm text-secondary font-medium">Fats</span>
+<span class="font-stat-numeral-sm text-stat-numeral-sm text-secondary font-bold mt-0.5" id="hero-fats">18g</span>
+<div class="w-full bg-secondary-fixed rounded-full h-1.5 mt-1.5 overflow-hidden">
+<div class="bg-secondary h-full rounded-full transition-all duration-300" id="bar-fats" style="width: 42%"></div>
+</div>
+</div>
+</div>
+<div class="mt-space-md rounded-2xl bg-secondary-container/70 p-space-md flex gap-space-sm items-start text-on-secondary-fixed relative z-10">
+<div class="w-8 h-8 rounded-full bg-surface-container-lowest flex items-center justify-center shrink-0 shadow-sm text-primary">
+<span class="material-symbols-outlined text-[18px]">lightbulb</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md font-bold text-primary">VIT-AP Dietitian Note</span>
+<p class="font-body-sm text-body-sm text-on-secondary-fixed-variant mt-0.5 leading-snug">
+            Today's Dal Tadka is high in lentil protein. Avoid extra ghee on phulkas to stay cleanly within your lunch fat allowance.
+          </p>
+</div>
+</div>
+</div>
+</div>
+<div class="px-margin mt-space-lg">
+<div class="relative overflow-hidden rounded-2xl bg-surface-container-lowest p-space-md shadow-sm">
+<div class="flex items-center gap-space-xs mb-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">swap_horiz</span>
+<h3 class="font-title-lg text-title-lg text-primary font-bold">Non-Veg Smart Swap</h3>
+</div>
+<div class="flex items-start gap-space-md">
+<div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-surface-container-high shadow-inner">
+<img class="w-full h-full object-cover" data-alt="Traditional Indian style boiled egg curry served in an authentic ceramic bowl with rich warm spiced tomato onion gravy and fresh coriander garnish" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCChUiizm4AvwTTOS3VWcC09LfLOEQYSW_mn5apkUOsLgwnXgQQAohg0h7vW4jT36aa3w9b1JkLSUweumS6CAcjBvHoU_HkXXYeHxOiAq4lueDW2It-PZROZ6VavwDGsfKloW_1zVP5PHXAuc4kIxNBGY0gBSDogX2pi2HrzeSaNcxHKCkZHKsUkmi8X5sHS_6nww5PCEUBqDz47Q-7_NqX3Cs2I7vLSh2V5k-VGMkBLjI7U_40Ooag"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface font-semibold truncate">Boiled Egg Curry (2 eggs)</span>
+<button class="px-3 py-1 rounded-full bg-secondary-fixed text-primary font-label-md text-label-md font-bold hover:bg-primary hover:text-on-primary transition-colors shrink-0" id="swap-btn" onclick="toggleEggSwap()">
+              Swap
+            </button>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Swap out Aloo Gobi for <span class="font-semibold text-primary">+12g protein</span> (+45 kcal).
+          </p>
+<div class="flex items-center gap-2 mt-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-error-container text-error font-label-sm text-label-sm font-semibold">Non-Veg Counter</span>
+<span class="font-label-sm text-label-sm text-secondary">Slot 3B</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-margin mt-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-secondary-fixed text-primary flex items-center justify-center font-bold text-xs">🍽️</span>
+<h3 class="font-title-lg text-title-lg text-primary font-bold">Guided Campus Plate</h3>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">Tap item to log</span>
+</div>
+<div class="flex flex-col gap-space-sm" id="plate-items">
+<div class="item-card rounded-2xl bg-surface-container-lowest p-space-md shadow-sm transition-all duration-200 cursor-pointer" onclick="toggleItem(0)">
+<div class="flex items-start gap-space-md">
+<div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-surface-container-high relative">
+<img class="w-full h-full object-cover" data-alt="Steamed fluffy white Sona Masoori long grain rice freshly prepared in an Indian mess kitchen setting, natural soft window lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBHfaFZOYBhTWYZN-O62um2ATMuG5u7ZY7OJ-tSLXm5CbvUIKqEwTJkKuTz9WaSGz__wUZT1YDQAYmhAz8TzNJoivB6tq4p9EYQLpukZEqCArbEUvPpqtdeubvOdTr1Ln9TwaGqrINqoyVQPzWq40FcoBGmrnZix2x3802yLQzcYunp1xiILAe0azW4eCs687VbjiqsQQM7cAShA0epqoHRtgU2bqYLEtVsxPmKQ-KR61by0O0pnnN"/>
+<div class="absolute inset-0 bg-black/5"></div>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-1">
+<h4 class="font-title-md text-title-md text-on-surface font-bold leading-tight">Steamed Sona Masoori Rice</h4>
+<button aria-label="Toggle Steamed Sona Masoori Rice" class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 check-indicator transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px] leading-none" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+</div>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="material-symbols-outlined text-secondary text-[14px]">tune</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Recommended: 1 standard katori (120g)</span>
+</div>
+<div class="flex items-center gap-3 mt-2 font-label-md text-label-md">
+<span class="text-primary font-bold">156 kcal</span>
+<span class="text-on-surface-variant">• 3g Protein</span>
+<span class="text-on-surface-variant">• 35g Carbs</span>
+</div>
+</div>
+</div>
+</div>
+<div class="item-card rounded-2xl bg-surface-container-lowest p-space-md shadow-sm transition-all duration-200 cursor-pointer" onclick="toggleItem(1)">
+<div class="flex items-start gap-space-md">
+<div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-surface-container-high relative">
+<img class="w-full h-full object-cover" data-alt="Traditional yellow dal tadka tempered with cumin seeds, mustard seeds, and fresh curry leaves served warm in a cafeteria bowl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9ckSiDyh_mAo-quaz4674UxgmUhq92Rw2j6dpfdr1H5KcLTW5UuJZpM0F7bSDp5orvYyU1Lgap6-ud69FWsIGO1ZARmqMLFZ-czK1SwMx8HkCo9oN8YHoH2CE_sjO_TrM5z6mtzAU_Ti1HeNKauL82aWJTHOPW4rgCeXlF0Iw11Gk3Kvj81f5Mpeee-4KOcddjFiVZ6zEF6Om3ofnT1FeYqH_U8mysqb13xTfyIkEkx8GB-ulDfNA"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<h4 class="font-title-md text-title-md text-on-surface font-bold leading-tight">Yellow Dal Tadka</h4>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-primary font-label-sm text-label-sm font-bold">Key Protein Source</span>
+</div>
+<button aria-label="Toggle Yellow Dal Tadka" class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 check-indicator transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px] leading-none" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+</div>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="material-symbols-outlined text-secondary text-[14px]">tune</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Recommended: 1.5 katori (generous)</span>
+</div>
+<div class="flex items-center gap-3 mt-2 font-label-md text-label-md">
+<span class="text-primary font-bold">185 kcal</span>
+<span class="text-on-primary-fixed-variant font-bold">• 12g Protein</span>
+<span class="text-on-surface-variant">• 22g Carbs</span>
+</div>
+</div>
+</div>
+</div>
+<div class="item-card rounded-2xl bg-surface-container-lowest p-space-md shadow-sm transition-all duration-200 cursor-pointer" id="veg-curry-item" onclick="toggleItem(2)">
+<div class="flex items-start gap-space-md">
+<div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-surface-container-high relative">
+<img class="w-full h-full object-cover" data-alt="Home style dry Aloo Gobi subzi with turmeric spiced tender potatoes and cauliflower florets in a metal cafeteria tray" id="curry-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtJASCDrSJnSddMYfLd_TR7f_xBU4Ut7Z2DjS2p3BbX9rslwDcyGqExLmPWisK-PCFnkT1B3gP7XLrH3AMbdGiAjg2j5I3-23onpplWi27Auh6ATx1wnhiIl5CbXbW8DoEdCGkoI0Sb2Peo1rgtKS_C3VO0ydrsgE6jigfvQ8hVHSAaNKRmCeTzJq1MFCk6uw5y9jVYV57h0Nr6TwRPcTnXf93BkT5Gpjoz4nTFlKaem9Zui-5AaAI"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-1">
+<h4 class="font-title-md text-title-md text-on-surface font-bold leading-tight" id="curry-name">Aloo Gobi Masala</h4>
+<button aria-label="Toggle Curry Selection" class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 check-indicator transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px] leading-none" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+</div>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="material-symbols-outlined text-secondary text-[14px]">tune</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium" id="curry-portion">Recommended: 0.5 katori (moderate)</span>
+</div>
+<div class="flex items-center gap-3 mt-2 font-label-md text-label-md">
+<span class="text-primary font-bold" id="curry-cal">110 kcal</span>
+<span class="text-on-surface-variant" id="curry-protein">• 2g Protein</span>
+<span class="text-on-surface-variant" id="curry-fats">• 6g Fat</span>
+</div>
+</div>
+</div>
+</div>
+<div class="item-card rounded-2xl bg-surface-container-lowest p-space-md shadow-sm transition-all duration-200 cursor-pointer" onclick="toggleItem(3)">
+<div class="flex items-start gap-space-md">
+<div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-surface-container-high relative">
+<img class="w-full h-full object-cover" data-alt="Fresh sealed organic set curd dahi in a plain recyclable container on a clean university dining table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHu8g3YKo84ahyicQAB1miKnnTFk4icUHW6NOASawrH72bVm4M0Lpd8OHCK70Jw26DjtiwoZMvIDFzjji61C2FhTj-ErjgzcEZqapzHp8d4IdyJKUsF2hCzoHY09_na8adkGA16ZZQ_vRubxyi-vfyKbWUrrDjJ-Q76snRuK-KbOrQbWD0tNLy8f7cCZd8hMcaGkZBD76-pUb3oE5sVrxCpZsnsU6ifQjJTQV2qrQWIsxCsvFGM03d"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<h4 class="font-title-md text-title-md text-on-surface font-bold leading-tight">Curd / Dahi</h4>
+<span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-primary font-label-sm text-label-sm font-bold">Probiotic</span>
+</div>
+<button aria-label="Toggle Curd / Dahi" class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 check-indicator transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px] leading-none" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+</div>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="material-symbols-outlined text-secondary text-[14px]">tune</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Recommended: 1 sealed cup (100g)</span>
+</div>
+<div class="flex items-center gap-3 mt-2 font-label-md text-label-md">
+<span class="text-primary font-bold">65 kcal</span>
+<span class="text-on-surface-variant">• 3.5g Protein</span>
+<span class="text-on-surface-variant">• 4g Fat</span>
+</div>
+</div>
+</div>
+</div>
+<div class="item-card rounded-2xl bg-surface-container-lowest p-space-md shadow-sm transition-all duration-200 cursor-pointer" onclick="toggleItem(4)">
+<div class="flex items-start gap-space-md">
+<div class="w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-surface-container-high relative">
+<img class="w-full h-full object-cover" data-alt="Crisp cucumber slices, shredded carrots, green chilies and lemon wedge raw Indian mess salad plate" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVyPmby69Eq3nEV2rNaaNq7t6wk-KYm8OG06I_VoZo8Z2oqcbvUFHRDj9JmfVelRgsbSw5NhB94f8t6WC2EMETKAMmfYBqrSqrx3dkG05VjXfDjnV1ZX07_2kKr7EUgSKPTPswfy6J11l1HETmOEzP7OxUS-KIURZc9o8_uWMGk38_GHG_y0ZL2myrEn6-kCRh32Vb9OclgM2Myy8LF3kAUGMY16dRv482lPrnlgaicAHlidDlkOq2"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-start justify-between gap-1">
+<div class="flex items-center gap-1.5 flex-wrap">
+<h4 class="font-title-md text-title-md text-on-surface font-bold leading-tight">Green Salad &amp; Cucumber</h4>
+<span class="px-2 py-0.5 rounded-full bg-primary-fixed text-primary font-label-sm text-label-sm font-bold">High Fiber</span>
+</div>
+<button aria-label="Toggle Green Salad &amp; Cucumber" class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 check-indicator transition-transform" type="button">
+<span class="material-symbols-outlined text-[16px] leading-none" style="font-variation-settings: 'FILL' 1;">check</span>
+</button>
+</div>
+<div class="flex items-center gap-1.5 mt-1">
+<span class="material-symbols-outlined text-secondary text-[14px]">all_inclusive</span>
+<span class="font-label-sm text-label-sm text-secondary font-medium">Recommended: Unlimited portion</span>
+</div>
+<div class="flex items-center gap-3 mt-2 font-label-md text-label-md">
+<span class="text-primary font-bold">24 kcal</span>
+<span class="text-on-surface-variant">• 1g Protein</span>
+<span class="text-on-surface-variant">• 0.2g Fat</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="px-margin mt-space-lg">
+<div class="rounded-2xl bg-surface-container-low p-space-md flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-fixed flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[20px]">water_drop</span>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-md text-label-md font-bold text-on-surface">Campus Hydration Tip</span>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Don't forget to grab 2 glasses of RO water before heading back to the hostels!</p>
+</div>
+</div>
+</div>
+<div class="fixed bottom-0 left-0 w-full z-40 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_-8px_24px_rgba(20,48,38,0.08)] px-margin py-3 pb-safe">
+<div class="max-w-md mx-auto flex items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary uppercase font-semibold">Total Selected</span>
+<div class="flex items-baseline gap-1.5">
+<span class="font-title-lg text-title-lg text-primary font-extrabold" id="footer-cal">640 kcal</span>
+<span class="text-secondary text-xs">•</span>
+<span class="font-label-md text-label-md text-secondary font-bold" id="footer-protein">28g Protein</span>
+</div>
+</div>
+<button class="h-[52px] px-6 rounded-full bg-primary hover:bg-[#144637] active:scale-[0.98] text-on-primary font-label-lg text-label-lg font-bold flex items-center gap-2 shadow-md transition-all shrink-0" id="log-button" onclick="logMeal()">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>Add to my day</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  const mealItems = [
+    { name: "Steamed Sona Masoori Rice", cal: 156, protein: 3, carbs: 35, fats: 0.5, selected: true },
+    { name: "Yellow Dal Tadka", cal: 185, protein: 12, carbs: 22, fats: 5, selected: true },
+    { name: "Aloo Gobi Masala", cal: 110, protein: 2, carbs: 14, fats: 6, selected: true },
+    { name: "Curd / Dahi", cal: 65, protein: 3.5, carbs: 4.5, fats: 4, selected: true },
+    { name: "Green Salad & Cucumber", cal: 24, protein: 1, carbs: 4.8, fats: 0.2, selected: true }
+  ];
+
+  let isEggCurrySwapped = false;
+
+  function recalculateTotals() {
+    let totCal = 0;
+    let totProtein = 0;
+    let totCarbs = 0;
+    let totFats = 0;
+
+    mealItems.forEach(item => {
+      if (item.selected) {
+        totCal += item.cal;
+        totProtein += item.protein;
+        totCarbs += item.carbs;
+        totFats += item.fats;
+      }
+    });
+
+    document.getElementById('hero-calories').innerText = Math.round(totCal);
+    document.getElementById('hero-protein').innerText = Math.round(totProtein) + 'g';
+    document.getElementById('hero-carbs').innerText = Math.round(totCarbs) + 'g';
+    document.getElementById('hero-fats').innerText = Math.round(totFats) + 'g';
+
+    document.getElementById('footer-cal').innerText = Math.round(totCal) + ' kcal';
+    document.getElementById('footer-protein').innerText = Math.round(totProtein) + 'g Protein';
+
+    const pPct = Math.min(100, Math.round((totProtein / 35) * 100));
+    const cPct = Math.min(100, Math.round((totCarbs / 110) * 100));
+    const fPct = Math.min(100, Math.round((totFats / 30) * 100));
+
+    document.getElementById('bar-protein').style.width = pPct + '%';
+    document.getElementById('bar-carbs').style.width = cPct + '%';
+    document.getElementById('bar-fats').style.width = fPct + '%';
+  }
+
+  function toggleItem(index) {
+    mealItems[index].selected = !mealItems[index].selected;
+    const cards = document.querySelectorAll('#plate-items .item-card');
+    const card = cards[index];
+    const indicator = card.querySelector('.check-indicator');
+
+    if (mealItems[index].selected) {
+      card.classList.remove('opacity-50');
+      indicator.className = "w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center shrink-0 check-indicator transition-transform";
+      indicator.innerHTML = '<span class="material-symbols-outlined text-[16px] leading-none" style="font-variation-settings: \'FILL\' 1;">check</span>';
+    } else {
+      card.classList.add('opacity-50');
+      indicator.className = "w-6 h-6 rounded-full bg-surface-container-high text-outline flex items-center justify-center shrink-0 check-indicator transition-transform";
+      indicator.innerHTML = '<span class="material-symbols-outlined text-[16px] leading-none">add</span>';
+    }
+
+    recalculateTotals();
+  }
+
+  function toggleEggSwap() {
+    isEggCurrySwapped = !isEggCurrySwapped;
+    const swapBtn = document.getElementById('swap-btn');
+    const nameEl = document.getElementById('curry-name');
+    const portionEl = document.getElementById('curry-portion');
+    const calEl = document.getElementById('curry-cal');
+    const proteinEl = document.getElementById('curry-protein');
+    const fatsEl = document.getElementById('curry-fats');
+
+    if (isEggCurrySwapped) {
+      mealItems[2] = { name: "Egg Curry (2 eggs)", cal: 155, protein: 14, carbs: 3, fats: 10, selected: mealItems[2].selected };
+      swapBtn.innerText = "Revert";
+      swapBtn.className = "px-3 py-1 rounded-full bg-primary text-on-primary font-label-md text-label-md font-bold shrink-0";
+      nameEl.innerText = "Egg Curry (2 eggs)";
+      portionEl.innerText = "Non-Veg Counter: 2 whole eggs in gravy";
+      calEl.innerText = "155 kcal";
+      proteinEl.innerText = "• 14g Protein";
+      fatsEl.innerText = "• 10g Fat";
+    } else {
+      mealItems[2] = { name: "Aloo Gobi Masala", cal: 110, protein: 2, carbs: 14, fats: 6, selected: mealItems[2].selected };
+      swapBtn.innerText = "Swap";
+      swapBtn.className = "px-3 py-1 rounded-full bg-secondary-fixed text-primary font-label-md text-label-md font-bold shrink-0 hover:bg-primary hover:text-on-primary transition-colors";
+      nameEl.innerText = "Aloo Gobi Masala";
+      portionEl.innerText = "Recommended: 0.5 katori (moderate)";
+      calEl.innerText = "110 kcal";
+      proteinEl.innerText = "• 2g Protein";
+      fatsEl.innerText = "• 6g Fat";
+    }
+
+    recalculateTotals();
+  }
+
+  function logMeal() {
+    const btn = document.getElementById('log-button');
+    btn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">sync</span><span>Logging...</span>';
+    btn.disabled = true;
+
+    setTimeout(() => {
+      btn.className = "h-[52px] px-6 rounded-full bg-secondary-fixed text-primary font-label-lg text-label-lg font-bold flex items-center gap-2 shadow-sm shrink-0";
+      btn.innerHTML = '<span class="material-symbols-outlined text-[20px]">task_alt</span><span>Logged!</span>';
+    }, 700);
+  }
+</script></main></body></html>

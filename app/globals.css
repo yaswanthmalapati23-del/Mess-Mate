@@ -1,0 +1,56 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-base: #FBF9F4;
+    --card-surface: #FFFFFF;
+    --card-border: rgba(20, 48, 38, 0.06);
+    --text-main: #143026;
+    --text-muted: #5F7A6E;
+  }
+
+  .dark {
+    --bg-base: #0A0C0E;
+    --card-surface: #14171D;
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text-main: #F3F4F6;
+    --text-muted: #8E98A8;
+  }
+
+  body {
+    background-color: var(--bg-base);
+    color: var(--text-main);
+    min-height: 100vh;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum";
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  h1, h2, h3, .font-display {
+    letter-spacing: -0.025em;
+  }
+}
+
+/* Hide scrollbar for clean horizontal tabs */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Glassmorphic card styling */
+.glass-panel {
+  background: rgba(20, 23, 29, 0.75);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-light {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}

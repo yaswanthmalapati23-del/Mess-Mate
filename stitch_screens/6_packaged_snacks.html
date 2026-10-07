@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-dim": "#dbdad5", "on-secondary-fixed": "#111e18", "on-primary": "#ffffff", "on-tertiary-fixed-variant": "#324c41", "on-background": "#1b1c19", "surface-container-highest": "#e4e2dd", "on-primary-container": "#94d5bc", "tertiary-fixed-dim": "#b0cdbf", "outline-variant": "#bfc9c3", "tertiary": "#284237", "primary-fixed": "#aef0d6", "inverse-on-surface": "#f2f1ec", "primary-fixed-dim": "#93d4ba", "on-secondary": "#ffffff", "secondary-fixed": "#d6e6dc", "error-container": "#ffdad6", "surface-container-high": "#eae8e3", "surface-container-low": "#f5f3ee", "error": "#ba1a1a", "surface-container": "#f0eee9", "on-surface-variant": "#404944", "on-error": "#ffffff", "on-tertiary-container": "#b1cec0", "surface-bright": "#fbf9f4", "on-tertiary-fixed": "#052017", "surface-variant": "#e4e2dd", "tertiary-fixed": "#cce9db", "surface-tint": "#286955", "on-secondary-container": "#596860", "secondary-container": "#d6e6dc", "tertiary-container": "#3f594e", "primary": "#004534", "outline": "#707974", "secondary-fixed-dim": "#bacac1", "on-secondary-fixed-variant": "#3c4a43", "on-primary-fixed-variant": "#06513e", "primary-container": "#1b5e4a", "surface-container-lowest": "#ffffff", "secondary": "#53625a", "background": "#fbf9f4", "inverse-surface": "#30312e", "on-error-container": "#93000a", "surface": "#fbf9f4", "on-primary-fixed": "#002117", "on-tertiary": "#ffffff", "inverse-primary": "#93d4ba", "on-surface": "#1b1c19" }, borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }, spacing: { "space-sm": "0.5rem", "space-xl": "1.75rem", "space-xs": "0.25rem", "margin": "1rem", "space-md": "1rem", "gutter": "1rem", "space-lg": "1.25rem" }, fontFamily: { "display-lg": ["Plus Jakarta Sans"], "body-md": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "headline-sm": ["Plus Jakarta Sans"], "title-lg": ["Plus Jakarta Sans"], "stat-numeral-sm": ["Plus Jakarta Sans"], "label-md": ["Plus Jakarta Sans"], "body-sm": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "body-lg": ["Plus Jakarta Sans"], "label-lg": ["Plus Jakarta Sans"], "stat-numeral-lg": ["Plus Jakarta Sans"], "label-sm": ["Plus Jakarta Sans"], "headline-md": ["Plus Jakarta Sans"] }, fontSize: { "display-lg": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }], "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }], "title-md": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }], "headline-sm": ["18px", { lineHeight: "24px", fontWeight: "600" }], "title-lg": ["16px", { lineHeight: "22px", fontWeight: "600" }], "stat-numeral-sm": ["20px", { lineHeight: "24px", letterSpacing: "-0.02em", fontWeight: "700" }], "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.03em", fontWeight: "600" }], "body-sm": ["12px", { lineHeight: "18px", fontWeight: "400" }], "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "-0.015em", fontWeight: "700" }], "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.02em", fontWeight: "600" }], "stat-numeral-lg": ["32px", { lineHeight: "36px", letterSpacing: "-0.03em", fontWeight: "800" }], "label-sm": ["11px", { lineHeight: "14px", letterSpacing: "0.04em", fontWeight: "500" }], "headline-md": ["22px", { lineHeight: "28px", fontWeight: "600" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(20,48,38,0.04)] pt-safe"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><img alt="Mess Mate Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1VLHJCZ96eHYlP6WUD8NjMs7c5yyn4IkD5lPzJk2M3OnyV5WmT7ZBK3gxMNg8u-KYYiquaAdETbb97AnbZpVeOBlxgxGxMuUr_AtXYtoGK__QIODy_xWgRtFrxC-jqQLl71iv3Gt3YRIB9pn0EewkrtU75PEen-7pcC1sTumCKNTYAkjOXl5Q9DHEp4Vsu9rJFD7tWdZYr8NkkcBsxJvS3XPUWzCkWjVN58k6IztGHOuivBuwOmLeHtPw"/><div class="flex flex-col"><span class="font-label-sm text-label-sm text-secondary uppercase tracking-wider">VIT-AP University</span><h1 class="font-title-lg text-title-lg text-on-surface">Explore</h1></div></div><div class="flex items-center gap-space-xs"><button aria-label="Notifications" class="w-11 h-11 flex items-center justify-center rounded-full text-secondary hover:text-on-surface hover:bg-secondary-container/40 transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface"><div class="flex flex-col w-full px-margin space-y-space-lg pb-12">
+<!-- Sub-header & Editorial Framing -->
+<div class="flex flex-col pt-space-xs">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="inline-block w-2 h-2 rounded-full bg-primary"></span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Tuck Shop Intelligence</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Packaged Snacks &amp; Drinks</h2>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">Instant calorie &amp; macro verdict for campus tuck shops</p>
+</div>
+<!-- Search & Barcode Scan Entry -->
+<div class="flex items-center gap-space-sm">
+<div class="relative flex-1 flex items-center">
+<span class="material-symbols-outlined absolute left-3.5 text-primary text-[20px] pointer-events-none">search</span>
+<input class="w-full h-[48px] pl-10 pr-4 bg-surface-container-lowest text-on-surface placeholder:text-secondary rounded-full font-body-sm text-body-sm shadow-[0_2px_12px_rgba(20,48,38,0.04)] focus:outline-none focus:bg-surface-container-low transition-colors" placeholder="Search Amul store, Campus Mart snacks..." type="text"/>
+</div>
+<button aria-label="Open Barcode Scanner" class="w-[48px] h-[48px] rounded-full bg-primary flex items-center justify-center text-on-primary shadow-sm hover:opacity-95 active:scale-95 transition-all shrink-0">
+<span class="material-symbols-outlined text-[22px]">barcode_scanner</span>
+</button>
+</div>
+<!-- Category Filter Pills (Horizontal Scroll) -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-0.5 -mx-margin px-margin">
+<button class="h-9 px-4 rounded-full bg-secondary-container text-primary font-label-md text-label-md shrink-0 flex items-center shadow-sm">
+      All
+    </button>
+<button class="h-9 px-4 rounded-full bg-surface-container-lowest text-secondary font-label-md text-label-md shrink-0 flex items-center hover:text-on-surface transition-colors shadow-sm">
+      Protein Bars
+    </button>
+<button class="h-9 px-4 rounded-full bg-surface-container-lowest text-secondary font-label-md text-label-md shrink-0 flex items-center hover:text-on-surface transition-colors shadow-sm">
+      Biscuits &amp; Bakery
+    </button>
+<button class="h-9 px-4 rounded-full bg-surface-container-lowest text-secondary font-label-md text-label-md shrink-0 flex items-center hover:text-on-surface transition-colors shadow-sm">
+      Beverages
+    </button>
+<button class="h-9 px-4 rounded-full bg-surface-container-lowest text-secondary font-label-md text-label-md shrink-0 flex items-center hover:text-on-surface transition-colors shadow-sm">
+      Chips &amp; Savory
+    </button>
+</div>
+<!-- Product List -->
+<div class="flex flex-col space-y-space-md">
+<!-- Product 1: Amul High Protein Lassi -->
+<div class="w-full bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_4px_16px_rgba(20,48,38,0.05)] flex flex-col space-y-space-sm relative overflow-hidden">
+<div class="flex items-start gap-space-md">
+<div class="w-20 h-20 rounded-[18px] bg-surface-container-low shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A clean product shot of cold bottled rose lassi drink in translucent packaging with fresh rose petals and organic dairy texture, soft natural light, warm cream background, botanical aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDcoe5ahKz_rAHbPe-1LkAeP8FXnxBgRXilUk8KgnMW44CQL9L4nHeDK2VtRaj5_Ierg532TM2bNSLL84ZCo_sjKCagdBqa4n3F3Q8MuA0mW-Uquj3e3jWwziiMgX8WmOZtPCnas_sQBsj7gleioRz_8zKqAoAoDM8GDC-vFK_PP2OprTFAqmNxUG9S7ZBXMABL32YgsuC2TQMcebAEG4l5lny9MqNOBuiXIaTYOjFy0GDpcp2Cq1K"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-secondary">Amul • 250ml</span>
+<span class="font-title-md text-title-md text-primary font-semibold">130 kcal</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface truncate mt-0.5">Amul High Protein Lassi</h3>
+<p class="font-body-sm text-body-sm text-secondary">Rose Flavored Cultured Milk</p>
+<div class="flex items-center gap-space-xs mt-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+              15g Protein
+            </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+              Low Sugar
+            </span>
+</div>
+</div>
+</div>
+<!-- Verdict Banner -->
+<div class="w-full bg-secondary-container text-primary-container px-3.5 py-2 rounded-full flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-md text-label-md font-semibold text-primary truncate">Campus MVP: High Protein, Low Fat</span>
+</div>
+<!-- Macro Proportional Bar -->
+<div class="space-y-1.5 pt-1">
+<div class="w-full h-2 rounded-full bg-surface-container-high flex overflow-hidden">
+<div class="h-full bg-primary-container" style="width: 55%;" title="Protein 15g"></div>
+<div class="h-full bg-tertiary-fixed-dim" style="width: 35%;" title="Carbs 12g"></div>
+<div class="h-full bg-surface-dim" style="width: 10%;" title="Fat 2g"></div>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary-container"></span> 15g Protein</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span> 12g Carbs</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-surface-dim"></span> 2g Fat</span>
+</div>
+</div>
+</div>
+<!-- Product 2: Yoga Bar Dark Chocolate Almond -->
+<div class="w-full bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_4px_16px_rgba(20,48,38,0.05)] flex flex-col space-y-space-sm relative overflow-hidden">
+<div class="flex items-start gap-space-md">
+<div class="w-20 h-20 rounded-[18px] bg-surface-container-low shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A studio flatlay photo of a gourmet dark chocolate almond energy bar with broken almond clusters and cocoa nibs on warm parchment paper, soft directional studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNGt0xrdvAK9Ql1KsiDZRVus0c8dIm4nLfz175bvheLELgEdNH6kiSBMCLoU4ERvCI0264AjAmsbqP5h_83eb_rE02HBgmU1qkFMOf74Zlme2VbFbDcvpLNDWThWo5TSpXU5mzX5ulzz2R48P5oe7J-1vNnmb1LPS7q4U1I32CuPB_LHhVGRHRRLqlWHzPqQJrr5Y1QSqwMKpC7p6cQIxbX4Td5dvDIzlafc2liE3NlTn-lOCujQ9i"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-secondary">Yoga Bar • 38g</span>
+<span class="font-title-md text-title-md text-primary font-semibold">180 kcal</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface truncate mt-0.5">Dark Chocolate Almond</h3>
+<p class="font-body-sm text-body-sm text-secondary">Multigrain Energy Snack Bar</p>
+<div class="flex items-center gap-space-xs mt-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+              8g Protein
+            </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+              4.5g Fiber
+            </span>
+</div>
+</div>
+</div>
+<!-- Verdict Banner -->
+<div class="w-full bg-secondary-container text-primary px-3.5 py-2 rounded-full flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-md text-label-md font-semibold text-primary truncate">Good Pre-Study Snack</span>
+</div>
+<!-- Macro Proportional Bar -->
+<div class="space-y-1.5 pt-1">
+<div class="w-full h-2 rounded-full bg-surface-container-high flex overflow-hidden">
+<div class="h-full bg-primary-container" style="width: 25%;"></div>
+<div class="h-full bg-tertiary-fixed-dim" style="width: 45%;"></div>
+<div class="h-full bg-surface-dim" style="width: 30%;"></div>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary-container"></span> 8g Protein</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span> 18g Carbs</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-surface-dim"></span> 7g Fat</span>
+</div>
+</div>
+</div>
+<!-- Product 3: Lay's Classic Salted Chips -->
+<div class="w-full bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_4px_16px_rgba(20,48,38,0.05)] flex flex-col space-y-space-sm relative overflow-hidden">
+<div class="flex items-start gap-space-md">
+<div class="w-20 h-20 rounded-[18px] bg-surface-container-low shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="A modern product still life of crispy yellow potato chips spilling out of a sleek packaging aesthetic with sea salt crystals nearby, warm editorial kitchen counter setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMWuNRovLi7t3-G1bR6inUqwzIvmZlrUQ_VHt9HzKBSlK-JkF9vpeIHodD5q83AheJQVEsAYuFWg09YtbkOUHH476ZGa1YswTadRIxn0NbMp4qmL5k1pUbW74RD3WhO9G-zT6dprPKOVJIMCibBFlZzWwap8DQS-JRgA6mF3ADY0IY_ORhd8aq5Lil1IuGCvg2HMW6D8_rU-TIZNu-A2tqKUdtVq5eJjYgcQDfuyoAhkP3tHUuTG8p"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-secondary">Lay's • 52g pouch</span>
+<span class="font-title-md text-title-md text-error font-semibold">285 kcal</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface truncate mt-0.5">Classic Salted Chips</h3>
+<p class="font-body-sm text-body-sm text-secondary">Crisp Potato Wafers</p>
+<div class="flex items-center gap-space-xs mt-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">
+              3g Protein
+            </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm">
+              18g Fat
+            </span>
+</div>
+</div>
+</div>
+<!-- Caution Verdict Banner -->
+<div class="w-full bg-surface-container-high text-on-surface-variant px-3.5 py-2 rounded-full flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-outline">warning</span>
+<span class="font-label-md text-label-md font-semibold text-on-surface truncate">High Calorie Density: Share with roommate</span>
+</div>
+<!-- Macro Proportional Bar -->
+<div class="space-y-1.5 pt-1">
+<div class="w-full h-2 rounded-full bg-surface-container-high flex overflow-hidden">
+<div class="h-full bg-primary-container" style="width: 10%;"></div>
+<div class="h-full bg-tertiary-fixed-dim" style="width: 42%;"></div>
+<div class="h-full bg-outline" style="width: 48%;"></div>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary-container"></span> 3g Protein</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span> 26g Carbs</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-outline"></span> 18g Fat</span>
+</div>
+</div>
+</div>
+<!-- Product 4: Epigamia Greek Yogurt (Blueberry) -->
+<div class="w-full bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_4px_16px_rgba(20,48,38,0.05)] flex flex-col space-y-space-sm relative overflow-hidden">
+<div class="flex items-start gap-space-md">
+<div class="w-20 h-20 rounded-[18px] bg-surface-container-low shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Thick creamy Greek yogurt in a minimalist white tub with fresh ripe blueberries on top and a silver spoon resting beside on natural wooden table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCUZHRbGsASn_Lxb_2uhyWGY4ieZzlc4-vknkUlEVnoyILeeZ06I2X3fbllPbXwG7zPqJuo54nNNnsOqL-iqyD0_8pJevqzmJ1yVMcRp_rjg6bts0QJHNtgP3WaSs68m2mGfCnPLGRvcXPbQjD_Xf5ireYNN1_FoVb6FRQcotzLSzqQ2ME5-X79U1nTOvHpRAQGbitLW99CkSfMlyRU2hu-zWxyhJo6IW6_x_AxHawT5ijdTsEtemBI"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-secondary">Epigamia • 100g</span>
+<span class="font-title-md text-title-md text-primary font-semibold">95 kcal</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface truncate mt-0.5">Greek Yogurt Blueberry</h3>
+<p class="font-body-sm text-body-sm text-secondary">Strained Thick Yogurt with Fruit</p>
+<div class="flex items-center gap-space-xs mt-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+              6g Protein
+            </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+              Real Fruit
+            </span>
+</div>
+</div>
+</div>
+<!-- Verdict Banner -->
+<div class="w-full bg-secondary-container text-primary px-3.5 py-2 rounded-full flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-md text-label-md font-semibold text-primary truncate">Great Evening Snack</span>
+</div>
+<!-- Macro Proportional Bar -->
+<div class="space-y-1.5 pt-1">
+<div class="w-full h-2 rounded-full bg-surface-container-high flex overflow-hidden">
+<div class="h-full bg-primary-container" style="width: 35%;"></div>
+<div class="h-full bg-tertiary-fixed-dim" style="width: 50%;"></div>
+<div class="h-full bg-surface-dim" style="width: 15%;"></div>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary-container"></span> 6g Protein</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span> 11g Carbs</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-surface-dim"></span> 1.8g Fat</span>
+</div>
+</div>
+</div>
+<!-- Product 5: Raw Pressery Coconut Water -->
+<div class="w-full bg-surface-container-lowest rounded-[24px] p-space-md shadow-[0_4px_16px_rgba(20,48,38,0.05)] flex flex-col space-y-space-sm relative overflow-hidden">
+<div class="flex items-start gap-space-md">
+<div class="w-20 h-20 rounded-[18px] bg-surface-container-low shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Chilled bottle of pure tender coconut water with condensation drops on the bottle surface, natural fresh cracked coconut nearby, bright refreshing ambient sunlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB-El48x0tqD_y9MI77RQjDnMQ2kvQIK6IUCcPxOjkgurr1-FnNWR1Q_PRltTQ8cTWC1-KeQRpZ_NZ06MrdJ1SEaIIFk6vIk6RG1recLj9Vg5RMTdVhOOfHcdBhMJ1EE5KyFweRoLs76cyV2pNlK_i__6uxAy0g5dbzyyyD_DeyKf2Aalrc9iK3cU6YFcp1JTXRnCkvg4LHSQmT0EJlqCaQSHcqzkUy-WDfMJZYKQdNcfUAMUDDbBGH"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm uppercase tracking-wide text-secondary">Raw Pressery • 200ml</span>
+<span class="font-title-md text-title-md text-primary font-semibold">45 kcal</span>
+</div>
+<h3 class="font-title-lg text-title-lg text-on-surface truncate mt-0.5">Tender Coconut Water</h3>
+<p class="font-body-sm text-body-sm text-secondary">100% Pure, No Added Sugar</p>
+<div class="flex items-center gap-space-xs mt-1.5">
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">
+              Electrolytes
+            </span>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-label-sm text-label-sm">
+              0g Added Sugar
+            </span>
+</div>
+</div>
+</div>
+<!-- Verdict Banner -->
+<div class="w-full bg-secondary-container text-primary px-3.5 py-2 rounded-full flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="font-label-md text-label-md font-semibold text-primary truncate">Clean Hydration</span>
+</div>
+<!-- Macro Proportional Bar -->
+<div class="space-y-1.5 pt-1">
+<div class="w-full h-2 rounded-full bg-surface-container-high flex overflow-hidden">
+<div class="h-full bg-tertiary-fixed-dim" style="width: 95%;"></div>
+<div class="h-full bg-primary-container" style="width: 5%;"></div>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm text-secondary">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-tertiary-fixed-dim"></span> 10g Natural Carbs</span>
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-primary-container"></span> 0.5g Protein</span>
+<span class="flex items-center gap-1">0g Fat</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Campus Store Quick Tip Arch Card -->
+<div class="w-full rounded-t-[36dp] rounded-b-[20dp] bg-secondary-container/50 p-space-md flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary text-[22px]">storefront</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-title-md text-title-md text-on-secondary-fixed">Campus Mart Tip</h4>
+<p class="font-body-sm text-body-sm text-secondary">Amul High Protein Buttermilk &amp; Greek Yogurts are usually restocked on Tuesday &amp; Friday mornings at Rock Plaza tuck shop.</p>
+</div>
+</div>
+<!-- Floating Barcode Scanner Action Button -->
+<div class="sticky bottom-4 z-40 flex justify-center w-full px-margin pointer-events-none mt-4">
+<button class="pointer-events-auto flex items-center gap-2 h-13 px-6 bg-primary text-on-primary rounded-full shadow-[0_8px_24px_rgba(0,69,52,0.28)] hover:bg-primary-container active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[22px]">qr_code_scanner</span>
+<span class="font-label-lg text-label-lg font-semibold tracking-wide">Scan Barcode at Mart</span>
+</button>
+</div>
+</div>
+<script>
+  // Filter pill interaction
+  document.querySelectorAll('.overflow-x-auto button').forEach(button => {
+    button.addEventListener('click', () => {
+      document.querySelectorAll('.overflow-x-auto button').forEach(b => {
+        b.className = 'h-9 px-4 rounded-full bg-surface-container-lowest text-secondary font-label-md text-label-md shrink-0 flex items-center hover:text-on-surface transition-colors shadow-sm';
+      });
+      button.className = 'h-9 px-4 rounded-full bg-secondary-container text-primary font-label-md text-label-md shrink-0 flex items-center shadow-sm';
+    });
+  });
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_20px_rgba(20,48,38,0.06)]" data-active-classes="bg-secondary-container text-primary-container font-semibold"><div class="h-16 px-space-sm flex items-center justify-around"><a class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full text-secondary hover:text-primary transition-all duration-200" data-path="home" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-sm text-label-sm mt-0.5">Home</span></a><a class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full text-secondary hover:text-primary transition-all duration-200" data-path="menu" href="#"><span class="material-symbols-outlined text-[24px]">restaurant_menu</span><span class="font-label-sm text-label-sm mt-0.5">Menu</span></a><a aria-current="page" class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full transition-all duration-200 bg-secondary-container text-primary-container font-semibold" data-path="explore" href="#"><span class="material-symbols-outlined text-[24px]">explore</span><span class="font-label-sm text-label-sm mt-0.5">Explore</span></a><a class="flex flex-col items-center justify-center min-w-[64px] h-12 px-space-md rounded-full text-secondary hover:text-primary transition-all duration-200" data-path="profile" href="#"><span class="material-symbols-outlined text-[24px]">account_circle</span><span class="font-label-sm text-label-sm mt-0.5">Profile</span></a></div></nav></body></html>
