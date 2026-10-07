@@ -41,10 +41,14 @@ export async function POST(req: NextRequest) {
 
     if (error) {
       console.warn('Supabase Auth signInWithOtp error:', error.message);
+      let userFriendly = error.message || 'Failed to dispatch verification code to your college email.';
+      if (error.message.includes('Database error saving new user') || error.message.includes('not authorized')) {
+        userFriendly = `Access Denied: The domain @${email.split('@')[1]} is not authorized in the campus database. Please enter your official @vitapstudent.ac.in or @vitap.ac.in college email.`;
+      }
       return NextResponse.json(
         {
           success: false,
-          error: error.message || 'Failed to dispatch verification code to your college email.',
+          error: userFriendly,
         },
         { status: 400 }
       );

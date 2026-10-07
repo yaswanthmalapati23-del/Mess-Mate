@@ -147,14 +147,23 @@ export function isAllowedCollegeEmail(email: string): {
   const allowed = getAllowedCollegeDomains();
   const isCollege =
     allowed.some((d) => domain === d || domain.endsWith('.' + d)) ||
-    domain.endsWith('.edu') ||
-    domain.endsWith('.edu.in') ||
-    domain.endsWith('.ac.in');
+    domain === 'vitapstudent.ac.in' ||
+    domain === 'vitap.ac.in' ||
+    domain === 'student.vitap.ac.in';
+
+  if (!isCollege) {
+    return {
+      valid: false,
+      domain,
+      isCollegeDomain: false,
+      reason: `Access Denied: Registration is restricted to official university emails (@vitapstudent.ac.in or @vitap.ac.in). Personal email accounts (@${domain}) are not authorized.`,
+    };
+  }
 
   return {
     valid: true,
     domain,
-    isCollegeDomain: isCollege,
+    isCollegeDomain: true,
   };
 }
 
@@ -190,7 +199,14 @@ export async function sendCollegeOtp(
         return { success: true };
       }
       console.warn('Supabase signInWithOtp error:', error.message);
-      return { success: false, error: error.message };
+      let userFriendlyError = error.message;
+      if (
+        error.message.includes('Database error saving new user') ||
+        error.message.includes('not authorized')
+      ) {
+        userFriendlyError = `Access Denied: The email domain (@${cleanEmail.split('@')[1]}) is not authorized in the campus database. Please enter your official @vitapstudent.ac.in or @vitap.ac.in college email.`;
+      }
+      return { success: false, error: userFriendlyError };
     } catch (e: any) {
       console.warn('Supabase signInWithOtp exception:', e.message);
     }
