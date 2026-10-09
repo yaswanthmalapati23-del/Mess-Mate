@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { ShieldCheck, User, X, Trash2, ArrowRight, Utensils, RotateCcw } from 'lucide-react';
 import { UserProfile, MealLogItem } from '@/lib/types';
 import { getStoredLogs, deleteStoredLog, clearTodayLogs, getTodayDateStr } from '@/lib/storage';
@@ -16,6 +17,7 @@ interface HeaderProps {
   onOpenProfile: () => void;
   onOpenPlan?: () => void;
   onSignOut?: () => void;
+  onReplayAnimation?: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -24,6 +26,7 @@ export const Header: React.FC<HeaderProps> = ({
   targetCalories = 2100,
   onOpenProfile,
   onOpenPlan,
+  onReplayAnimation,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [todayLogs, setTodayLogs] = useState<MealLogItem[]>([]);
@@ -69,20 +72,34 @@ export const Header: React.FC<HeaderProps> = ({
     <>
       <header className="sticky top-0 z-30 bg-[#FBF9F4]/90 backdrop-blur-xl border-b border-[#A9BFB5]/20 px-4 py-2.5 transition-colors shadow-[0_1px_8px_rgba(20,48,38,0.04)] font-sans">
         <div className="max-w-md mx-auto flex items-center justify-between">
-          {/* Left: Brand & University Subtitle */}
-          <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-xl bg-[#1B5E4A] shadow-xs flex items-center justify-center text-white text-sm font-bold select-none">
-              🌿
+          {/* Left: Brand & University Subtitle with App Logo */}
+          <button
+            onClick={() => {
+              if (onReplayAnimation) {
+                onReplayAnimation();
+              } else {
+                window.dispatchEvent(new CustomEvent('replay_starting_animation'));
+              }
+            }}
+            title="Replay Mess Mate Starting Animation"
+            className="flex items-center space-x-2.5 text-left group cursor-pointer focus:outline-none active:scale-95 transition-transform"
+          >
+            <div className="w-11 h-8 rounded-xl bg-white border border-[#A9BFB5]/30 p-0.5 shadow-xs flex items-center justify-center overflow-hidden group-hover:scale-105 group-hover:border-[#1B5E4A]/40 transition-all duration-200">
+              <img
+                src="/logo.png"
+                alt="Mess Mate"
+                className="object-contain w-full h-full select-none"
+              />
             </div>
             <div className="flex flex-col">
-              <span className="text-[10px] font-bold text-[#5F7A6E] uppercase tracking-wider">
+              <span className="text-[10px] font-bold text-[#5F7A6E] uppercase tracking-wider group-hover:text-[#1B5E4A] transition-colors">
                 VIT-AP University
               </span>
               <h1 className="font-sans font-extrabold text-base tracking-tight text-[#143026] leading-none">
                 Mess Mate
               </h1>
             </div>
-          </div>
+          </button>
 
           {/* Right: Interactive Calorie Counter Pill & Profile Avatar */}
           <div className="flex items-center space-x-2">

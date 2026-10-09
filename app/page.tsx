@@ -21,6 +21,7 @@ import { FoodCourtLogger } from '@/components/FoodCourtLogger';
 import { DailyTracker } from '@/components/DailyTracker';
 import { ProfilePageView } from '@/components/ProfilePageView';
 import { AuthPageView } from '@/components/AuthPageView';
+import { StartingAnimation } from '@/components/StartingAnimation';
 
 const BurgerIcon = ({ className = 'w-5 h-5' }: { className?: string }) => (
   <svg
@@ -49,6 +50,7 @@ export default function Home() {
   const [selectedDayNumber, setSelectedDayNumber] = useState(1);
   const [streakCount, setStreakCount] = useState(0);
   const [isDark, setIsDark] = useState(false);
+  const [showStartingAnimation, setShowStartingAnimation] = useState(true);
   const [todaySummary, setTodaySummary] = useState<DailyTrackingSummary>(() =>
     getDaySummary(getTodayDateStr(), DEFAULT_PROFILE)
   );
@@ -168,13 +170,19 @@ export default function Home() {
       setStreakCount(currentStreak);
     };
 
+    const handleReplayAnimation = () => {
+      setShowStartingAnimation(true);
+    };
+
     window.addEventListener('mess_mate_logs_updated', handleLogsUpdated);
     window.addEventListener('storage', handleLogsUpdated);
+    window.addEventListener('replay_starting_animation', handleReplayAnimation);
 
     return () => {
       authSubscription?.unsubscribe();
       window.removeEventListener('mess_mate_logs_updated', handleLogsUpdated);
       window.removeEventListener('storage', handleLogsUpdated);
+      window.removeEventListener('replay_starting_animation', handleReplayAnimation);
     };
   }, []);
 
@@ -275,59 +283,56 @@ export default function Home() {
     setTodaySummary(getDaySummary(getTodayDateStr(), profile));
   };
 
-  if (!isClient) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-[#F6F8FB]">
-        <div className="flex flex-col items-center space-y-3">
-          <div className="w-12 h-12 rounded-2xl bg-[#E04F16] flex items-center justify-center text-white text-2xl animate-pulse shadow-md">
-            🍲
-          </div>
-          <span className="text-xs font-bold text-gray-500 font-sans">Loading Mess Mate...</span>
+  const renderMainView = () => {
+    if (!isClient) {
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-[#071611]">
+          {/* Subtle loading fallback while splash mounts */}
         </div>
-      </div>
-    );
-  }
+      );
+    }
 
-  // 1. Mandatory Sign In / Sign Up full-page view if student is not authenticated
-  if (!student) {
-    return <AuthPageView onAuthSuccess={handleAuthSuccess} />;
-  }
+    // 1. Mandatory Sign In / Sign Up full-page view if student is not authenticated
+    if (!student) {
+      return <AuthPageView onAuthSuccess={handleAuthSuccess} />;
+    }
 
-  // 2. Full-page Profile onboarding if student has not completed biomarker setup
-  if (!student.onboardingCompleted) {
+    // 2. Full-page Profile onboarding if student has not completed biomarker setup
+    if (!student.onboardingCompleted) {
+      return (
+        <ProfilePageView
+          profile={profile}
+          student={student}
+          onSaveProfile={handleProfileSave}
+          onSignOut={handleSignOut}
+          onBackToHome={() => setActiveTab('home')}
+        />
+      );
+    }
+
+    const currentDayMenu =
+      monthlyMenu.find((d) => d.dayNumber === selectedDayNumber) || monthlyMenu[0] || {
+        dayNumber: 1,
+        dayOfWeek: 'Monday',
+        slots: { breakfast: [], lunch: [], snacks: [], dinner: [] },
+      };
+
     return (
-      <ProfilePageView
-        profile={profile}
-        student={student}
-        onSaveProfile={handleProfileSave}
-        onSignOut={handleSignOut}
-        onBackToHome={() => setActiveTab('home')}
-      />
-    );
-  }
-
-  const currentDayMenu =
-    monthlyMenu.find((d) => d.dayNumber === selectedDayNumber) || monthlyMenu[0] || {
-      dayNumber: 1,
-      dayOfWeek: 'Monday',
-      slots: { breakfast: [], lunch: [], snacks: [], dinner: [] },
-    };
-
-  return (
-    <div className="min-h-screen bg-[#FBF9F4] text-[#143026] flex flex-col justify-between selection:bg-[#1B5E4A] selection:text-white transition-colors duration-200 font-sans">
-      {/* Top Header matching Google Stitch reference */}
-      <Header
-        profile={profile}
-        currentStreak={streakCount}
-        isDark={isDark}
-        todayCalories={todaySummary.caloriesConsumed}
-        targetCalories={profile.targetCalories || 2100}
-        studentEmail={student?.email}
-        onToggleTheme={handleToggleTheme}
-        onOpenProfile={() => setActiveTab('profile')}
-        onOpenPlan={() => setActiveTab('log')}
-        onSignOut={handleSignOut}
-      />
+      <div className="min-h-screen bg-[#FBF9F4] text-[#143026] flex flex-col justify-between selection:bg-[#1B5E4A] selection:text-white transition-colors duration-200 font-sans">
+        {/* Top Header matching Google Stitch reference */}
+        <Header
+          profile={profile}
+          currentStreak={streakCount}
+          isDark={isDark}
+          todayCalories={todaySummary.caloriesConsumed}
+          targetCalories={profile.targetCalories || 2100}
+          studentEmail={student?.email}
+          onToggleTheme={handleToggleTheme}
+          onOpenProfile={() => setActiveTab('profile')}
+          onOpenPlan={() => setActiveTab('log')}
+          onSignOut={handleSignOut}
+          onReplayAnimation={() => setShowStartingAnimation(true)}
+        />
 
       {/* Main Content Area */}
       <main className="max-w-md mx-auto w-full px-4 pt-1 flex-1 pb-4">
@@ -477,5 +482,19 @@ export default function Home() {
         </div>
       </nav>
     </div>
+    );
+  };
+
+  return (
+    <>
+      {showStartingAnimation && (
+        <StartingAnimation
+          onFinish={() => setShowStartingAnimation(false)}
+          durationMs={2500}
+          showSkipButton={true}
+        />
+      )}
+      {renderMainView()}
+    </>
   );
 }

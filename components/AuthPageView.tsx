@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import {
   Mail,
   Lock,
@@ -273,20 +274,39 @@ export const AuthPageView: React.FC<AuthPageViewProps> = ({ onAuthSuccess }) => 
           <div className="absolute -bottom-16 -left-12 w-44 h-44 rounded-full bg-[#284237] opacity-30 pointer-events-none" />
 
           {/* Campus Wellness Eyebrow Badge */}
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D6E6DC] text-[#1B5E4A] mb-3.5 shadow-xs">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D6E6DC] text-[#1B5E4A] mb-3 shadow-xs">
             <Leaf className="w-3.5 h-3.5 text-[#1B5E4A]" />
             <span className="text-[11px] uppercase tracking-wider font-bold text-[#1B5E4A]">
               VIT-AP Campus Nutrition
             </span>
           </div>
 
-          {/* Logo Avatar Container */}
-          <div className="w-16 h-16 rounded-2xl bg-white p-2 shadow-md flex items-center justify-center mb-3 ring-4 ring-[#AEF0D6]/30">
-            <span className="text-3xl select-none">🌿</span>
+          {/* Prominent App Logo Showcase */}
+          <div className="relative my-2 flex flex-col items-center group">
+            <div className="relative w-56 sm:w-64 max-w-[280px] bg-white rounded-3xl p-3 shadow-xl border-2 border-white/90 ring-4 ring-[#AEF0D6]/20 transition-all duration-300 hover:scale-[1.03]">
+              <img
+                src="/logo.png"
+                alt="Mess Mate Logo"
+                className="w-full h-auto object-contain drop-shadow-sm select-none"
+              />
+            </div>
+            {/* Subtle glow underneath */}
+            <div className="absolute -inset-1 bg-emerald-400/25 blur-xl rounded-full -z-10" />
           </div>
 
+          {/* Watch Starting Animation Action Pill */}
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent('replay_starting_animation'))}
+            className="mt-2.5 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white/15 hover:bg-white/25 border border-white/20 text-white text-xs font-semibold transition-all cursor-pointer active:scale-95 shadow-xs"
+            title="Watch the starting animation for this logo"
+          >
+            <span className="animate-pulse">✨</span>
+            <span>Watch Starting Animation</span>
+          </button>
+
           {/* Brand Titles */}
-          <h1 className="text-2xl font-black text-white tracking-tight mb-1">
+          <h1 className="text-2xl font-black text-white tracking-tight mt-3 mb-1">
             Mess Mate
           </h1>
           <p className="text-xs text-[#AEF0D6] max-w-[270px] leading-relaxed font-medium">
