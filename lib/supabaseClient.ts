@@ -169,60 +169,64 @@ export function isAllowedCollegeEmail(email: string): {
 
 /**
  * Sends a 6-digit OTP code to the student's email via server-side email dispatch.
- * Does not expose or return the OTP code to the client.
+ * Checks whether the student account exists on sign-up/sign-in.
  */
 export async function sendCollegeOtp(
-  email: string
-): Promise<{ success: boolean; error?: string }> {
+  email: string,
+  mode: 'signin' | 'signup' = 'signin'
+): Promise<{
+  success: boolean;
+  error?: string;
+  accountExists?: boolean;
+  accountNotFound?: boolean;
+}> {
   const check = isAllowedCollegeEmail(email);
   if (!check.valid) {
     return { success: false, error: check.reason };
   }
 
   const cleanEmail = email.trim().toLowerCase();
-  const siteUrl =
-    typeof window !== 'undefined' && window.location.origin
-      ? window.location.origin
-      : 'https://mess-mate-dun.vercel.app';
 
-  // 1. Prioritize live Supabase Auth OTP dispatch (sends real email directly from Supabase)
-  if (supabase) {
-    try {
-      const { error } = await supabase.auth.signInWithOtp({
-        email: cleanEmail,
-        options: {
-          shouldCreateUser: true,
-          emailRedirectTo: `${siteUrl}/`,
-        },
-      });
-      if (!error) {
-        return { success: true };
-      }
-      console.warn('Supabase signInWithOtp error:', error.message);
-      let userFriendlyError = error.message;
-      if (
-        error.message.includes('Database error saving new user') ||
-        error.message.includes('not authorized')
-      ) {
-        userFriendlyError = `Access Denied: The email domain (@${cleanEmail.split('@')[1]}) is not authorized in the campus database. Please enter your official @vitapstudent.ac.in or @vitap.ac.in college email.`;
-      }
-      return { success: false, error: userFriendlyError };
-    } catch (e: any) {
-      console.warn('Supabase signInWithOtp exception:', e.message);
+  // Local check: if user is signing up and account already completed locally
+  if (mode === 'signup') {
+    const accounts = getLocalAccounts();
+    const existingLocal = accounts[cleanEmail];
+    if (existingLocal && existingLocal.onboardingCompleted) {
+      return {
+        success: false,
+        accountExists: true,
+        error: 'Account already exists! An account with this college email is already registered. Please switch to Sign In.',
+      };
     }
   }
 
-  // 2. Fallback to server-side API route
+  // Dispatch via server-side API route which enforces account existence validation
   try {
     const res = await fetch('/api/auth/send-otp', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: cleanEmail }),
+      body: JSON.stringify({ email: cleanEmail, mode }),
     });
 
     const data = await res.json();
     if (res.ok && data.success) {
       return { success: true };
+    }
+
+    if (data.accountExists) {
+      return {
+        success: false,
+        accountExists: true,
+        error: data.error || 'Account already exists! An account with this college email is already registered. Please switch to Sign In.',
+      };
+    }
+
+    if (data.accountNotFound) {
+      return {
+        success: false,
+        accountNotFound: true,
+        error: data.error || 'No account found with this email. Please switch to Sign Up to create your account.',
+      };
     }
 
     if (data.error) {
@@ -237,6 +241,7 @@ export async function sendCollegeOtp(
     error: 'Failed to send verification code. Please check your network connection.',
   };
 }
+
 
 /**
  * Verifies the 6-digit OTP token entered by the student against the server.
@@ -335,7 +340,7 @@ export async function verifyCollegeOtp(
 
   if (supabase && verifiedUserId) {
     try {
-      const profileRes = await fetchStudentProfile(verifiedUserId);
+      const profileRes = await fetchStudentProfile(verifiedUserId, cleanEmail);
       if (profileRes.profile) {
         dbProfile = profileRes.profile;
         onboardingCompleted = profileRes.onboardingCompleted;
@@ -668,49 +673,78 @@ export async function signInAdmin(
 }
 
 /**
- * Fetches the verified student profile from local cache or Supabase.
+ * Fetches the verified student profile specifically for this student from Supabase or local account cache.
+ * Note: Never falls back to an unlinked generic 'mess_mate_profile' cache to avoid falsely marking
+ * newly registered students as already onboarded.
  */
-export async function fetchStudentProfile(userId: string): Promise<{
+export async function fetchStudentProfile(
+  userId: string,
+  userEmail?: string
+): Promise<{
   onboardingCompleted: boolean;
   profile?: UserProfile;
 }> {
-  // Check local profile first
+  // 1. If Supabase is live, query public.students for this specific student ID
+  if (supabase && userId) {
+    try {
+      const { data: studentRow } = await supabase
+        .from('students')
+        .select('*')
+        .eq('id', userId)
+        .maybeSingle();
+
+      if (
+        studentRow &&
+        studentRow.onboarding_completed &&
+        studentRow.name &&
+        studentRow.name.trim() !== '' &&
+        studentRow.name !== 'Student'
+      ) {
+        const profile = mapStudentRowToProfile(studentRow);
+        if (profile) {
+          return {
+            onboardingCompleted: true,
+            profile,
+          };
+        }
+      }
+
+      // If record exists in Supabase and onboarding_completed is false, it is definitively false
+      if (studentRow && !studentRow.onboarding_completed) {
+        return { onboardingCompleted: false };
+      }
+    } catch (err) {
+      console.warn('Supabase fetchStudentProfile error:', err);
+    }
+  }
+
+  // 2. Check local accounts for THIS specific email or student ID only
   if (typeof window !== 'undefined') {
     try {
-      const raw = localStorage.getItem(STORAGE_KEYS.PROFILE);
-      if (raw) {
-        const parsed = JSON.parse(raw);
-        if (parsed && parsed.name && parsed.name !== 'Student') {
-          return { onboardingCompleted: true, profile: parsed };
-        }
+      const accounts = getLocalAccounts();
+      const cleanEmail = (userEmail || '').trim().toLowerCase();
+      const matched = Object.values(accounts).find(
+        (a) => (cleanEmail && a.email.toLowerCase() === cleanEmail) || a.id === userId
+      );
+
+      if (
+        matched &&
+        matched.onboardingCompleted &&
+        matched.profile &&
+        matched.profile.name &&
+        matched.profile.name !== 'Student'
+      ) {
+        return {
+          onboardingCompleted: true,
+          profile: matched.profile,
+        };
       }
     } catch (e) {}
   }
 
-  if (!supabase) {
-    return { onboardingCompleted: false };
-  }
-
-  try {
-    const { data: studentRow } = await supabase
-      .from('students')
-      .select('*')
-      .eq('id', userId)
-      .maybeSingle();
-
-    if (!studentRow || !studentRow.onboarding_completed || !studentRow.name) {
-      return { onboardingCompleted: false };
-    }
-
-    const profile = mapStudentRowToProfile(studentRow);
-    return {
-      onboardingCompleted: Boolean(profile),
-      profile,
-    };
-  } catch (err) {
-    return { onboardingCompleted: false };
-  }
+  return { onboardingCompleted: false };
 }
+
 
 /**
  * Saves or updates student profile in local storage and Supabase.

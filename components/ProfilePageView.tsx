@@ -130,18 +130,36 @@ export const ProfilePageView: React.FC<ProfilePageViewProps> = ({
     <div className="space-y-5 pb-24 animate-fade-in text-gray-900">
       {/* 1. Header Navigation */}
       <div className="flex items-center justify-between pt-1">
-        <button
-          type="button"
-          onClick={onBackToHome}
-          className="flex items-center space-x-1.5 text-xs font-bold text-gray-700 hover:text-gray-900 bg-white border border-gray-200/90 px-3.5 py-1.5 rounded-full shadow-xs active:scale-95 transition-all cursor-pointer"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Back to Home</span>
-        </button>
+        {student?.onboardingCompleted ? (
+          <button
+            type="button"
+            onClick={onBackToHome}
+            className="flex items-center space-x-1.5 text-xs font-bold text-gray-700 hover:text-gray-900 bg-white border border-gray-200/90 px-3.5 py-1.5 rounded-full shadow-xs active:scale-95 transition-all cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>Back to Home</span>
+          </button>
+        ) : (
+          <div className="flex items-center gap-2">
+            <span className="w-2.5 h-2.5 rounded-full bg-[#1B5E4A] animate-pulse" />
+            <span className="text-xs font-bold text-[#1B5E4A]">Step 2 of 2: Required Student Details</span>
+          </div>
+        )}
         <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
-          Student Profile
+          {student?.onboardingCompleted ? 'Student Profile' : 'Profile Setup'}
         </span>
       </div>
+
+      {!student?.onboardingCompleted && (
+        <div className="p-4 rounded-3xl bg-[#D6E6DC]/60 border border-[#1B5E4A]/30 text-[#143026] text-xs shadow-xs space-y-1">
+          <p className="font-extrabold text-[#1B5E4A] text-sm flex items-center gap-1.5">
+            <span>🎉 Email Verified Successfully!</span>
+          </p>
+          <p className="text-[11px] text-[#284237] leading-relaxed">
+            Please fill in your name, hostel block, and enrolled mess contract below so Mess Mate can calculate your personalized daily nutrition targets.
+          </p>
+        </div>
+      )}
 
       {/* 2. Profile Hero Card */}
       <div className="bg-white border border-gray-150/80 rounded-3xl p-5 shadow-xs relative overflow-hidden">
@@ -583,7 +601,13 @@ export const ProfilePageView: React.FC<ProfilePageViewProps> = ({
             className="w-full bg-[#1B5E4A] hover:bg-[#004534] active:scale-[0.99] text-white font-extrabold py-3.5 px-6 rounded-2xl flex items-center justify-center space-x-2 text-sm shadow-md transition-all cursor-pointer disabled:opacity-70"
           >
             <Save className="w-4 h-4" />
-            <span>{isSaving ? 'Saving Changes...' : 'Save Profile & Update Menus'}</span>
+            <span>
+              {isSaving
+                ? 'Saving Changes...'
+                : student?.onboardingCompleted
+                ? 'Save Profile & Update Menus'
+                : 'Complete Setup & Enter Mess Mate 🚀'}
+            </span>
           </button>
 
           <button

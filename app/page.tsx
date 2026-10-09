@@ -102,21 +102,22 @@ export default function Home() {
       supabase.auth.getSession().then(async ({ data: { session } }) => {
         if (session?.user) {
           const domain = session.user.email?.split('@')[1] || 'vitapstudent.ac.in';
-          const { onboardingCompleted, profile: dbProfile } = await fetchStudentProfile(session.user.id);
+          const { onboardingCompleted, profile: dbProfile } = await fetchStudentProfile(session.user.id, session.user.email);
+          const isComplete = Boolean(onboardingCompleted && dbProfile && dbProfile.name && dbProfile.name.trim() !== '' && dbProfile.name !== 'Student');
 
           const activeStudent: StudentAccount = {
             id: session.user.id,
             email: session.user.email || '',
             collegeDomain: domain,
-            onboardingCompleted,
-            profile: dbProfile,
+            onboardingCompleted: isComplete,
+            profile: isComplete ? dbProfile : undefined,
           };
           setStudent(activeStudent);
           try {
             localStorage.setItem('mess_mate_auth_student', JSON.stringify(activeStudent));
           } catch (e) {}
 
-          if (onboardingCompleted && dbProfile) {
+          if (isComplete && dbProfile) {
             setProfile(dbProfile);
             const mType = dbProfile.messType || 'non-veg';
             setMonthlyMenu(getMonthlyMenu(mType));
@@ -128,20 +129,21 @@ export default function Home() {
       const { data: authListener } = supabase.auth.onAuthStateChange(async (event, session) => {
         if (event === 'SIGNED_IN' && session?.user) {
           const domain = session.user.email?.split('@')[1] || 'vitapstudent.ac.in';
-          const { onboardingCompleted, profile: dbProfile } = await fetchStudentProfile(session.user.id);
+          const { onboardingCompleted, profile: dbProfile } = await fetchStudentProfile(session.user.id, session.user.email);
+          const isComplete = Boolean(onboardingCompleted && dbProfile && dbProfile.name && dbProfile.name.trim() !== '' && dbProfile.name !== 'Student');
           const activeStudent: StudentAccount = {
             id: session.user.id,
             email: session.user.email || '',
             collegeDomain: domain,
-            onboardingCompleted,
-            profile: dbProfile,
+            onboardingCompleted: isComplete,
+            profile: isComplete ? dbProfile : undefined,
           };
           setStudent(activeStudent);
           try {
             localStorage.setItem('mess_mate_auth_student', JSON.stringify(activeStudent));
           } catch (e) {}
 
-          if (onboardingCompleted && dbProfile) {
+          if (isComplete && dbProfile) {
             setProfile(dbProfile);
             const mType = dbProfile.messType || 'non-veg';
             setMonthlyMenu(getMonthlyMenu(mType));
@@ -190,13 +192,23 @@ export default function Home() {
 
   const handleAuthSuccess = async (authenticatedStudent: StudentAccount, isNewStudent: boolean) => {
     // Verify DB status
-    const { onboardingCompleted, profile: dbProfile } = await fetchStudentProfile(authenticatedStudent.id);
-    const isComplete = Boolean(onboardingCompleted && dbProfile);
+    const { onboardingCompleted, profile: dbProfile } = await fetchStudentProfile(
+      authenticatedStudent.id,
+      authenticatedStudent.email
+    );
+    const isComplete = Boolean(
+      !isNewStudent &&
+      onboardingCompleted &&
+      dbProfile &&
+      dbProfile.name &&
+      dbProfile.name.trim() !== '' &&
+      dbProfile.name !== 'Student'
+    );
 
     const activeStudent: StudentAccount = {
       ...authenticatedStudent,
       onboardingCompleted: isComplete,
-      profile: dbProfile || authenticatedStudent.profile,
+      profile: isComplete ? dbProfile : undefined,
     };
 
     setStudent(activeStudent);
@@ -208,6 +220,10 @@ export default function Home() {
       try {
         localStorage.removeItem('mess_mate_profile');
       } catch (e) {}
+      setProfile({
+        ...DEFAULT_PROFILE,
+        name: '',
+      });
       setActiveTab('profile');
     } else {
       setProfile(dbProfile);
