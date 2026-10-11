@@ -490,7 +490,6 @@ export default function Home() {
       {showStartingAnimation && (
         <StartingAnimation
           onFinish={() => setShowStartingAnimation(false)}
-          durationMs={2500}
           showSkipButton={true}
         />
       )}
