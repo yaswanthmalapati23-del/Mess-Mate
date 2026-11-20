@@ -596,7 +596,8 @@ export async function checkAdminRole(
   userId: string
 ): Promise<{ isAdmin: boolean; role?: string; error?: string }> {
   if (!supabase) {
-    return { isAdmin: true, role: 'admin' };
+    // Fail closed: without a configured backend we cannot verify privileges.
+    return { isAdmin: false, error: 'Backend authentication is not configured.' };
   }
 
   try {
@@ -629,9 +630,10 @@ export async function signInAdmin(
   }
 
   if (!supabase) {
+    // Fail closed: never authenticate an admin without a verifiable backend.
     return {
-      success: true,
-      admin: { id: 'demo_admin', email: cleanEmail, role: 'admin' },
+      success: false,
+      error: 'Administrator authentication backend is not configured.',
     };
   }
 

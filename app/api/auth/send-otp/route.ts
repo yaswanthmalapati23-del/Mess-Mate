@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { isAllowedCollegeEmail } from '@/lib/supabaseClient';
+import { rateLimit, getClientIp } from '@/lib/auth/rateLimit';
 
 const supabaseUrl =
   process.env.NEXT_PUBLIC_SUPABASE_URL ||
@@ -24,6 +25,18 @@ export async function POST(req: NextRequest) {
 
     if (!email) {
       return NextResponse.json({ success: false, error: 'Email address is required.' }, { status: 400 });
+    }
+
+    // Throttle per IP and per email to blunt email-bombing / enumeration abuse.
+    const ip = getClientIp(req);
+    const ipLimit = rateLimit(`send-otp:ip:${ip}`, 10, 10 * 60 * 1000);
+    const emailLimit = rateLimit(`send-otp:email:${email}`, 5, 10 * 60 * 1000);
+    if (!ipLimit.ok || !emailLimit.ok) {
+      const retryAfter = Math.max(ipLimit.retryAfter, emailLimit.retryAfter);
+      return NextResponse.json(
+        { success: false, error: 'Too many verification requests. Please wait a few minutes and try again.' },
+        { status: 429, headers: { 'Retry-After': String(retryAfter) } }
+      );
     }
 
     const check = isAllowedCollegeEmail(email);

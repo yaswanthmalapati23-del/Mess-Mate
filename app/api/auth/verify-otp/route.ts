@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { rateLimit, getClientIp } from '@/lib/auth/rateLimit';
 
 const supabaseUrl =
   process.env.NEXT_PUBLIC_SUPABASE_URL ||
@@ -32,6 +33,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { success: false, error: 'Verification code must be 6 digits.' },
         { status: 400 }
+      );
+    }
+
+    // Throttle verification attempts to prevent 6-digit OTP brute-forcing.
+    const ip = getClientIp(req);
+    const ipLimit = rateLimit(`verify-otp:ip:${ip}`, 20, 10 * 60 * 1000);
+    const emailLimit = rateLimit(`verify-otp:email:${email}`, 10, 10 * 60 * 1000);
+    if (!ipLimit.ok || !emailLimit.ok) {
+      const retryAfter = Math.max(ipLimit.retryAfter, emailLimit.retryAfter);
+      return NextResponse.json(
+        { success: false, error: 'Too many verification attempts. Please wait and request a new code.' },
+        { status: 429, headers: { 'Retry-After': String(retryAfter) } }
       );
     }
 

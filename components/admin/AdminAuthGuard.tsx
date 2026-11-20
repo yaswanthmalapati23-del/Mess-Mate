@@ -23,6 +23,8 @@ interface AdminAuthGuardProps {
 }
 
 export const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({ children }) => {
+  // Demo/evaluation shortcuts must never be available in a production build.
+  const isProduction = process.env.NODE_ENV === 'production';
   const [admin, setAdmin] = useState<AdminUser | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [email, setEmail] = useState('');
@@ -32,40 +34,60 @@ export const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({ children }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // 1. Check local session cache for fast access
-    try {
-      const cached = localStorage.getItem('mess_mate_admin_session');
-      if (cached) {
-        setAdmin(JSON.parse(cached));
+    const verifySession = async () => {
+      // 1. Supabase is authoritative: always re-verify against the server.
+      // A cached localStorage session is NEVER trusted on its own (it is trivially forgeable).
+      if (supabase) {
+        try {
+          const {
+            data: { session },
+          } = await supabase.auth.getSession();
+
+          if (session?.user) {
+            const check = await checkAdminRole(session.user.id);
+            if (check.isAdmin) {
+              const adminData: AdminUser = {
+                id: session.user.id,
+                userId: session.user.id,
+                email: session.user.email || 'admin@vitap.ac.in',
+                role: (check.role as AdminRole) || 'admin',
+                createdAt: new Date().toISOString(),
+              };
+              setAdmin(adminData);
+              try {
+                localStorage.setItem('mess_mate_admin_session', JSON.stringify(adminData));
+              } catch (e) {}
+              setIsLoading(false);
+              return;
+            }
+          }
+        } catch (e) {}
+
+        // No valid server-side admin session: drop any stale/forged local cache.
+        try {
+          localStorage.removeItem('mess_mate_admin_session');
+        } catch (e) {}
+        setAdmin(null);
         setIsLoading(false);
         return;
       }
-    } catch (e) {}
 
-    // 2. Check active Supabase session
-    if (supabase) {
-      supabase.auth.getSession().then(async ({ data: { session } }) => {
-        if (session?.user) {
-          const check = await checkAdminRole(session.user.id);
-          if (check.isAdmin) {
-            const adminData: AdminUser = {
-              id: session.user.id,
-              userId: session.user.id,
-              email: session.user.email || 'admin@vitap.ac.in',
-              role: (check.role as AdminRole) || 'admin',
-              createdAt: new Date().toISOString(),
-            };
-            setAdmin(adminData);
-            try {
-              localStorage.setItem('mess_mate_admin_session', JSON.stringify(adminData));
-            } catch (e) {}
-          }
-        }
+      // 2. Backend not configured: fail closed in production.
+      if (isProduction) {
+        setAdmin(null);
         setIsLoading(false);
-      });
-    } else {
+        return;
+      }
+
+      // 3. Development only: allow a previously stored demo session.
+      try {
+        const cached = localStorage.getItem('mess_mate_admin_session');
+        if (cached) setAdmin(JSON.parse(cached));
+      } catch (e) {}
       setIsLoading(false);
-    }
+    };
+
+    verifySession();
   }, []);
 
   const handleAdminLogin = async (e: React.FormEvent) => {
@@ -101,6 +123,8 @@ export const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({ children }) => {
   };
 
   const handleDemoAdminLogin = (role: AdminRole = 'admin') => {
+    // Hard block in production: never grant admin without verified credentials.
+    if (isProduction) return;
     const demoAdmin: AdminUser = {
       id: 'demo_admin_001',
       userId: 'demo_admin_001',
@@ -241,7 +265,8 @@ export const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({ children }) => {
             </button>
           </form>
 
-          {/* Quick Demo Access Options for Testing & Evaluation */}
+          {/* Quick Demo Access Options for Testing & Evaluation (development builds only) */}
+          {!isProduction && (
           <div className="mt-6 pt-5 border-t border-white/10 text-center space-y-3">
             <p className="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">
               Evaluation & Pilot Quick Access
@@ -274,6 +299,7 @@ export const AdminAuthGuard: React.FC<AdminAuthGuardProps> = ({ children }) => {
               </a>
             </div>
           </div>
+          )}
         </div>
       </div>
     );

@@ -9,6 +9,8 @@ import {
   Leaf,
   Dumbbell,
   CheckCircle2,
+  Download,
+  Check,
 } from 'lucide-react';
 import { DailyMenuDay, UserProfile } from '@/lib/types';
 import { DISH_LOOKUP } from '@/lib/data/messDishes';
@@ -29,6 +31,36 @@ export const MonthlyPlanView: React.FC<MonthlyPlanViewProps> = ({
   onOpenProfile,
 }) => {
   const [filterChoice, setFilterChoice] = useState<'all' | 'veg' | 'protein'>('all');
+  const [isDownloaded, setIsDownloaded] = useState(false);
+
+  const handleDownloadMenuCSV = () => {
+    try {
+      let csv = 'Day,Day of Week,Meal Slot,Dishes\n';
+      monthlyMenu.forEach((d) => {
+        const slots = ['breakfast', 'lunch', 'snacks', 'dinner'] as const;
+        slots.forEach((meal) => {
+          const slotIds = (d.slots as any)?.[meal] || [];
+          const dishNames = slotIds
+            .map((id: string) => DISH_LOOKUP.get(id)?.name || id)
+            .join('; ');
+          csv += `Day ${d.dayNumber},${d.dayOfWeek},${meal},"${dishNames.replace(/"/g, '""')}"\n`;
+        });
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `Mess_Mate_${currentMess}_Menu.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      setIsDownloaded(true);
+      setTimeout(() => setIsDownloaded(false), 3000);
+    } catch (e) {
+      console.error('Error exporting menu CSV:', e);
+    }
+  };
 
   const currentMess = profile.messType || 'non-veg';
   const messDisplay =
@@ -60,14 +92,34 @@ export const MonthlyPlanView: React.FC<MonthlyPlanViewProps> = ({
           <span className="text-xs text-[#5F7A6E] font-medium">October 2024 • Cycle Roster</span>
         </div>
 
-        <button
-          onClick={onOpenProfile}
-          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#D6E6DC] text-[#1B5E4A] text-xs font-bold shadow-xs hover:bg-[#D8E8DE] cursor-pointer"
-        >
-          <Store className="w-3.5 h-3.5" />
-          <span className="truncate max-w-[110px]">{messDisplay}</span>
-          <ChevronDown className="w-3.5 h-3.5" />
-        </button>
+        <div className="flex items-center gap-1.5">
+          <button
+            onClick={handleDownloadMenuCSV}
+            title="Download Monthly Mess Menu (.csv)"
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-full bg-white border border-[#A9BFB5]/30 text-[#143026] hover:text-[#1B5E4A] hover:border-[#1B5E4A]/50 text-xs font-bold shadow-xs active:scale-95 cursor-pointer transition-all"
+          >
+            {isDownloaded ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-[#1B5E4A]" />
+                <span className="hidden sm:inline text-[#1B5E4A]">Saved</span>
+              </>
+            ) : (
+              <>
+                <Download className="w-3.5 h-3.5 text-[#1B5E4A]" />
+                <span className="hidden sm:inline">Download</span>
+              </>
+            )}
+          </button>
+
+          <button
+            onClick={onOpenProfile}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#D6E6DC] text-[#1B5E4A] text-xs font-bold shadow-xs hover:bg-[#D8E8DE] cursor-pointer"
+          >
+            <Store className="w-3.5 h-3.5" />
+            <span className="truncate max-w-[110px]">{messDisplay}</span>
+            <ChevronDown className="w-3.5 h-3.5" />
+          </button>
+        </div>
       </div>
 
       {/* 2. DAY SELECTOR CAROUSEL */}

@@ -37,3 +37,8 @@ android/local.properties
 
 .vercel
 .env*
+
+# IDE & Tooling
+.idea/
+*.iml
+.agentschat/

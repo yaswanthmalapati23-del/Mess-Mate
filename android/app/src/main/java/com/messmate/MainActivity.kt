@@ -20,7 +20,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MaterialTheme(
                 colorScheme = NourishLightColorScheme,
-                typography = NourishTypography
+                typography = NourishTypography,
             ) {
                 MessMateAppNavigation()
             }

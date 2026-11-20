@@ -140,7 +140,10 @@ export function getMonthlyMenu(messType?: MessType): DailyMenuDay[] {
   if (typeof window === 'undefined') return defaultMenu;
   try {
     const key = messType && messType !== 'non-veg' ? `${STORAGE_KEYS.CUSTOM_MENU}_${messType}` : STORAGE_KEYS.CUSTOM_MENU;
-    const raw = localStorage.getItem(key);
+    // Admins publish a single custom rotation to the base key, so fall back to it
+    // when a diet-specific override has not been stored (otherwise veg/egg
+    // students would never receive the published menu).
+    const raw = localStorage.getItem(key) || (key !== STORAGE_KEYS.CUSTOM_MENU ? localStorage.getItem(STORAGE_KEYS.CUSTOM_MENU) : null);
     if (!raw) return defaultMenu;
     return JSON.parse(raw);
   } catch (e) {
@@ -221,7 +224,25 @@ export function calculateStreak(): { currentStreak: number; bestStreak: number }
     }
   }
 
-  return { currentStreak: streak, bestStreak: Math.max(streak, 7) };
+  // Compute the true best streak across all logged days (ascending order).
+  const ascending = Array.from(new Set(logs.map((l) => l.dateStr))).sort();
+  let bestStreak = 0;
+  let run = 0;
+  let prevDate: Date | null = null;
+  for (const ds of ascending) {
+    const cur = new Date(`${ds}T00:00:00`);
+    if (Number.isNaN(cur.getTime())) continue;
+    if (prevDate) {
+      const dayDiff = Math.round((cur.getTime() - prevDate.getTime()) / 86400000);
+      run = dayDiff === 1 ? run + 1 : 1;
+    } else {
+      run = 1;
+    }
+    if (run > bestStreak) bestStreak = run;
+    prevDate = cur;
+  }
+
+  return { currentStreak: streak, bestStreak: Math.max(bestStreak, streak) };
 }
 
 export function getStoredFoodCourtItems(): FoodCourtItem[] {
