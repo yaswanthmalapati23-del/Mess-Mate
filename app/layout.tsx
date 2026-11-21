@@ -19,7 +19,6 @@ const fraunces = Fraunces({
 export const metadata: Metadata = {
   title: "Mess Mate | Intelligent Campus Nutrition",
   description: "Personalized nutrition intelligence for college students from their actual monthly mess menu and food court options.",
-  manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "black-translucent",
@@ -50,6 +49,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${outfit.variable} ${fraunces.variable}`}>
+      <head>
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body className="antialiased font-sans bg-canvas text-ink min-h-screen">
         {children}
         <script

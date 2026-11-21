@@ -1,5 +1,5 @@
 ﻿// Mess Mate PWA Service Worker
-const CACHE_NAME = 'mess-mate-v1';
+const CACHE_NAME = 'mess-mate-v2';
 const STATIC_ASSETS = [
   '/',
   '/manifest.json',
