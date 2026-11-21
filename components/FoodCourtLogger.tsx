@@ -11,11 +11,7 @@ import {
   Flame,
   Leaf,
   Store,
-  ChevronRight,
   SlidersHorizontal,
-  Coffee,
-  Cake,
-  UtensilsCrossed,
 } from 'lucide-react';
 import { FoodCourtItem, FoodCourtShop, UserProfile } from '@/lib/types';
 import {
@@ -30,43 +26,82 @@ interface FoodCourtLoggerProps {
   onLogUpdated: () => void;
 }
 
-// Custom stylized SVG badges matching the screenshot artwork
-const OutletIllustrations: Record<string, React.ReactNode> = {
-  shop_cake_stories: (
-    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner text-3xl">
-      🍰
-    </div>
-  ),
-  shop_zuzu: (
-    <div className="w-16 h-16 rounded-full bg-[#EAB308]/20 backdrop-blur-md flex items-center justify-center shadow-inner text-3xl border border-[#EAB308]/30">
-      🍜
-    </div>
-  ),
-  shop_bits_bites: (
-    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner text-3xl">
-      🥞
-    </div>
-  ),
-  shop_shakers_movers: (
-    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner text-3xl">
-      🍹
-    </div>
-  ),
-  shop_ice_cream_bakery: (
-    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner text-3xl">
-      🍨
-    </div>
-  ),
-  shop_coffee_shop: (
-    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner text-3xl">
-      ☕
-    </div>
-  ),
-  shop_oasis_kitchens: (
-    <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center shadow-inner text-3xl">
-      🍔
-    </div>
-  ),
+// Exact brand styling matching the physical store menus and WhatsApp screenshots
+const OUTLET_THEMES: Record<
+  string,
+  {
+    bg: string;
+    gradient: string;
+    textColor: string;
+    subtextColor: string;
+    badgeBg: string;
+    badgeText: string;
+    circleBg: string;
+  }
+> = {
+  shop_cake_stories: {
+    bg: '#E91E63',
+    gradient: 'linear-gradient(135deg, #FF1867 0%, #D81B60 100%)',
+    textColor: '#FFFFFF',
+    subtextColor: 'rgba(255, 255, 255, 0.92)',
+    badgeBg: 'rgba(0, 0, 0, 0.28)',
+    badgeText: '#FFFFFF',
+    circleBg: 'rgba(255, 255, 255, 0.25)',
+  },
+  shop_zuzu: {
+    bg: '#F5BA13',
+    gradient: 'linear-gradient(135deg, #FDC726 0%, #E6AC0C 100%)',
+    textColor: '#141000', // High contrast dark charcoal on golden yellow
+    subtextColor: 'rgba(20, 16, 0, 0.85)',
+    badgeBg: 'rgba(20, 16, 0, 0.14)',
+    badgeText: '#141000',
+    circleBg: 'rgba(20, 16, 0, 0.08)',
+  },
+  shop_bits_bites: {
+    bg: '#22A34A',
+    gradient: 'linear-gradient(135deg, #28A745 0%, #15803D 100%)',
+    textColor: '#FFFFFF',
+    subtextColor: 'rgba(255, 255, 255, 0.92)',
+    badgeBg: 'rgba(0, 0, 0, 0.25)',
+    badgeText: '#FFFFFF',
+    circleBg: 'rgba(255, 255, 255, 0.22)',
+  },
+  shop_shakers_movers: {
+    bg: '#00A8B5',
+    gradient: 'linear-gradient(135deg, #00A8B5 0%, #00828E 100%)',
+    textColor: '#FFFFFF',
+    subtextColor: 'rgba(255, 255, 255, 0.92)',
+    badgeBg: 'rgba(0, 0, 0, 0.25)',
+    badgeText: '#FFFFFF',
+    circleBg: 'rgba(255, 255, 255, 0.22)',
+  },
+  shop_ice_cream_bakery: {
+    bg: '#5B2C98',
+    gradient: 'linear-gradient(135deg, #6C35B3 0%, #4D1E87 100%)',
+    textColor: '#FFFFFF',
+    subtextColor: 'rgba(255, 255, 255, 0.92)',
+    badgeBg: 'rgba(0, 0, 0, 0.28)',
+    badgeText: '#FFFFFF',
+    circleBg: 'rgba(255, 255, 255, 0.22)',
+  },
+  shop_coffee_shop: {
+    bg: '#604332',
+    gradient: 'linear-gradient(135deg, #6F4E37 0%, #452D1C 100%)',
+    textColor: '#FFFFFF',
+    subtextColor: 'rgba(255, 255, 255, 0.92)',
+    badgeBg: 'rgba(0, 0, 0, 0.32)',
+    badgeText: '#FFFFFF',
+    circleBg: 'rgba(255, 255, 255, 0.22)',
+  },
+  shop_oasis_kitchens: {
+    bg: '#F35B25',
+    gradient: 'linear-gradient(135deg, #F35B25 0%, #D4420E 100%)',
+    textColor: '#FFFFFF',
+    subtextColor: 'rgba(255, 255, 255, 0.92)',
+    badgeBg: 'rgba(0, 0, 0, 0.25)',
+    badgeText: '#FFFFFF',
+    circleBg: 'rgba(255, 255, 255, 0.22)',
+  },
 };
 
 export const FoodCourtLogger: React.FC<FoodCourtLoggerProps> = ({
@@ -94,6 +129,8 @@ export const FoodCourtLogger: React.FC<FoodCourtLoggerProps> = ({
   const selectedShop = useMemo(() => {
     return FOOD_COURT_SHOPS.find((s) => s.id === selectedShopId) || null;
   }, [selectedShopId]);
+
+  const activeTheme = selectedShop ? OUTLET_THEMES[selectedShop.id] : null;
 
   const handleSelectShop = (shopId: string) => {
     setSelectedShopId(shopId);
@@ -266,7 +303,7 @@ export const FoodCourtLogger: React.FC<FoodCourtLoggerProps> = ({
             </span>
           </div>
 
-          {/* 2-Column Food Street Outlets Grid matching screenshot */}
+          {/* 2-Column Food Street Outlets Grid with Guaranteed High-Contrast Colors */}
           <div className="grid grid-cols-2 gap-3.5">
             {FOOD_COURT_SHOPS.filter((shop) => {
               if (!searchTerm) return true;
@@ -276,38 +313,69 @@ export const FoodCourtLogger: React.FC<FoodCourtLoggerProps> = ({
               );
             }).map((shop) => {
               const shopItemCount = RAW_FOOD_COURT_ITEMS.filter((i) => i.shopId === shop.id).length;
+              const theme = OUTLET_THEMES[shop.id] || {
+                bg: '#1B5E4A',
+                gradient: 'linear-gradient(135deg, #1B5E4A 0%, #004534 100%)',
+                textColor: '#FFFFFF',
+                subtextColor: 'rgba(255, 255, 255, 0.9)',
+                badgeBg: 'rgba(0, 0, 0, 0.25)',
+                badgeText: '#FFFFFF',
+                circleBg: 'rgba(255, 255, 255, 0.22)',
+              };
+
               return (
                 <button
                   key={shop.id}
                   type="button"
                   onClick={() => handleSelectShop(shop.id)}
-                  className={`relative overflow-hidden rounded-[26px] p-4 text-left transition-all duration-200 active:scale-95 shadow-md flex flex-col justify-between min-h-[175px] bg-gradient-to-br ${shop.cardColor} text-white cursor-pointer group`}
+                  style={{
+                    backgroundColor: theme.bg,
+                    backgroundImage: theme.gradient,
+                    color: theme.textColor,
+                  }}
+                  className="relative overflow-hidden rounded-[26px] p-4 text-left transition-all duration-200 active:scale-95 shadow-md flex flex-col justify-between min-h-[185px] cursor-pointer group"
                 >
                   {/* Category Pill Tag */}
                   <div className="flex items-center justify-between w-full">
-                    <span className="text-[10px] font-bold uppercase tracking-wider bg-black/20 backdrop-blur-md px-2 py-0.5 rounded-full border border-white/20">
+                    <span
+                      style={{
+                        backgroundColor: theme.badgeBg,
+                        color: theme.badgeText,
+                      }}
+                      className="text-[10px] font-extrabold uppercase tracking-wider backdrop-blur-md px-2.5 py-0.5 rounded-full"
+                    >
                       {shop.categoryTag || 'Food Street'}
                     </span>
-                    <span className="text-xs opacity-80 group-hover:translate-x-1 transition-transform">
+                    <span
+                      style={{ color: theme.textColor }}
+                      className="text-xs font-bold opacity-80 group-hover:translate-x-1 transition-transform"
+                    >
                       →
                     </span>
                   </div>
 
                   {/* Centered Artwork Illustration */}
-                  <div className="flex items-center justify-center my-2.5">
-                    {OutletIllustrations[shop.id] || (
-                      <div className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center text-3xl">
-                        {shop.icon}
-                      </div>
-                    )}
+                  <div className="flex items-center justify-center my-2">
+                    <div
+                      style={{ backgroundColor: theme.circleBg }}
+                      className="w-16 h-16 rounded-full flex items-center justify-center shadow-inner text-3xl"
+                    >
+                      {shop.icon}
+                    </div>
                   </div>
 
-                  {/* Bottom Store Title & Info */}
+                  {/* Bottom Store Title & Info - 100% High Contrast Visible */}
                   <div>
-                    <h4 className="font-extrabold text-sm sm:text-base leading-tight tracking-tight drop-shadow-xs">
+                    <h4
+                      style={{ color: theme.textColor }}
+                      className="font-black text-base sm:text-lg leading-tight tracking-tight drop-shadow-xs"
+                    >
                       {shop.name}
                     </h4>
-                    <p className="text-[10px] text-white/80 font-medium mt-0.5 line-clamp-1">
+                    <p
+                      style={{ color: theme.subtextColor }}
+                      className="text-[11px] font-bold mt-1 line-clamp-1"
+                    >
                       {shopItemCount} items • {shop.priceRange}
                     </p>
                   </div>
@@ -350,7 +418,7 @@ export const FoodCourtLogger: React.FC<FoodCourtLoggerProps> = ({
                       <button
                         type="button"
                         onClick={() => handleLogFoodCourtItem(item)}
-                        className="px-2.5 py-1 rounded-full bg-[#1B5E4A] hover:bg-[#004534] text-white text-[11px] font-bold shadow-xs active:scale-95"
+                        className="px-2.5 py-1 rounded-full bg-[#1B5E4A] hover:bg-[#004534] text-white text-[11px] font-bold shadow-xs active:scale-95 cursor-pointer"
                       >
                         + Add
                       </button>
@@ -366,14 +434,14 @@ export const FoodCourtLogger: React.FC<FoodCourtLoggerProps> = ({
       {/* ======================================================== */}
       {/* VIEW B: STORE MENU VIEW (Appears after selecting Store)  */}
       {/* ======================================================== */}
-      {selectedShop && (
+      {selectedShop && activeTheme && (
         <div className="space-y-4 animate-in fade-in slide-in-from-right-4 duration-200">
           {/* Back Navigation Button */}
           <div className="flex items-center justify-between">
             <button
               type="button"
               onClick={handleBackToShops}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#A9BFB5]/30 text-xs font-bold text-[#143026] hover:text-[#1B5E4A] shadow-xs active:scale-95 transition-all cursor-pointer"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-[#A9BFB5]/30 text-xs font-bold text-[#143026] hover:text-[#1B5E4A] shadow-xs active:scale-95 transition-all cursor-pointer"
             >
               <ArrowLeft className="w-3.5 h-3.5 text-[#1B5E4A]" />
               <span>Back to Outlets</span>
@@ -383,38 +451,66 @@ export const FoodCourtLogger: React.FC<FoodCourtLoggerProps> = ({
             </span>
           </div>
 
-          {/* Store Banner Card styled matching screenshots */}
+          {/* Store Banner Card styled with Guaranteed Solid Theme */}
           <div
-            className={`p-5 rounded-[28px] bg-gradient-to-br ${selectedShop.cardColor} text-white shadow-md relative overflow-hidden`}
+            style={{
+              backgroundColor: activeTheme.bg,
+              backgroundImage: activeTheme.gradient,
+              color: activeTheme.textColor,
+            }}
+            className="p-5 rounded-[28px] shadow-lg relative overflow-hidden"
           >
             <div className="relative z-10 flex items-center justify-between">
               <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-wider bg-black/25 px-2.5 py-0.5 rounded-full border border-white/20">
+                <span
+                  style={{
+                    backgroundColor: activeTheme.badgeBg,
+                    color: activeTheme.badgeText,
+                  }}
+                  className="text-[10px] font-extrabold uppercase tracking-wider px-2.5 py-0.5 rounded-full"
+                >
                   {selectedShop.categoryTag || 'Food Street'}
                 </span>
-                <h3 className="text-2xl font-black tracking-tight mt-1 drop-shadow-xs">
+                <h3
+                  style={{ color: activeTheme.textColor }}
+                  className="text-2xl font-black tracking-tight mt-1.5 drop-shadow-xs"
+                >
                   {selectedShop.name}
                 </h3>
-                <p className="text-xs text-white/90 mt-0.5 font-medium max-w-[240px]">
+                <p
+                  style={{ color: activeTheme.subtextColor }}
+                  className="text-xs mt-0.5 font-medium max-w-[240px]"
+                >
                   {selectedShop.tagline}
                 </p>
               </div>
-              <div>{OutletIllustrations[selectedShop.id]}</div>
+              <div
+                style={{ backgroundColor: activeTheme.circleBg }}
+                className="w-16 h-16 rounded-full flex items-center justify-center text-3xl shadow-inner shrink-0 ml-2"
+              >
+                {selectedShop.icon}
+              </div>
             </div>
 
             {/* Quick subcategory pills in hero card */}
             {selectedShop.subcategories && selectedShop.subcategories.length > 0 && (
-              <div className="mt-4 pt-3 border-t border-white/20 flex flex-wrap gap-1.5 relative z-10">
+              <div className="mt-4 pt-3 border-t border-black/15 flex flex-wrap gap-1.5 relative z-10">
                 {selectedShop.subcategories.map((subcat) => (
                   <button
                     key={subcat}
                     type="button"
                     onClick={() => setSelectedSubcategory(subcat)}
-                    className={`px-2.5 py-1 rounded-full text-[11px] font-bold transition-all ${
-                      selectedSubcategory === subcat
-                        ? 'bg-white text-gray-900 shadow-sm'
-                        : 'bg-black/20 text-white/90 hover:bg-black/30'
-                    }`}
+                    style={{
+                      backgroundColor:
+                        selectedSubcategory === subcat
+                          ? '#FFFFFF'
+                          : activeTheme.badgeBg,
+                      color:
+                        selectedSubcategory === subcat
+                          ? '#141000'
+                          : activeTheme.textColor,
+                    }}
+                    className="px-2.5 py-1 rounded-full text-[11px] font-bold transition-all shadow-2xs"
                   >
                     {subcat}
                   </button>
