@@ -11,8 +11,15 @@ import {
   calculateStreak,
   getDaySummary,
   getTodayDateStr,
+  mergeRemoteLogsIntoLocal,
 } from '@/lib/storage';
-import { supabase, signOutStudent, upsertStudentProfile, fetchStudentProfile } from '@/lib/supabaseClient';
+import {
+  supabase,
+  signOutStudent,
+  upsertStudentProfile,
+  fetchStudentProfile,
+  fetchStudentMealLogsFromBackend,
+} from '@/lib/supabaseClient';
 import { Header } from '@/components/Header';
 import { StitchDashboard } from '@/components/StitchDashboard';
 import { TodayPlanView } from '@/components/TodayPlanView';
@@ -125,6 +132,13 @@ export default function Home() {
             setMonthlyMenu(getMonthlyMenu(mType));
             saveStoredProfile(dbProfile);
           }
+
+          // Retrieve today's meal logs from Supabase backend
+          fetchStudentMealLogsFromBackend(getTodayDateStr()).then((remoteLogs) => {
+            if (remoteLogs && remoteLogs.length > 0) {
+              mergeRemoteLogsIntoLocal(remoteLogs);
+            }
+          });
         }
       });
 
@@ -151,6 +165,13 @@ export default function Home() {
             setMonthlyMenu(getMonthlyMenu(mType));
             saveStoredProfile(dbProfile);
           }
+
+          // Retrieve today's meal logs from Supabase backend
+          fetchStudentMealLogsFromBackend(getTodayDateStr()).then((remoteLogs) => {
+            if (remoteLogs && remoteLogs.length > 0) {
+              mergeRemoteLogsIntoLocal(remoteLogs);
+            }
+          });
         } else if (event === 'SIGNED_OUT') {
           setStudent(null);
           try {
@@ -240,6 +261,13 @@ export default function Home() {
       saveStoredProfile(dbProfile);
       setActiveTab('home');
     }
+
+    // Pull student's meal logs from Supabase
+    fetchStudentMealLogsFromBackend(getTodayDateStr()).then((remoteLogs) => {
+      if (remoteLogs && remoteLogs.length > 0) {
+        mergeRemoteLogsIntoLocal(remoteLogs);
+      }
+    });
   };
 
   const handleSignOut = async () => {
@@ -271,7 +299,10 @@ export default function Home() {
       } catch (e) {}
 
       // Sync to Supabase public.students table
-      await upsertStudentProfile(newProfile, student.id, student.email);
+      const res = await upsertStudentProfile(newProfile, student.id, student.email);
+      if (!res.success) {
+        console.error('Failed to sync student profile to backend:', res.error);
+      }
     }
   };
 

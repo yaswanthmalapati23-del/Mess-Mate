@@ -1,5 +1,5 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { UserProfile, StudentAccount } from './types';
+import { UserProfile, StudentAccount, MealLogItem, FoodCourtItem } from './types';
 
 // Detect whether a REAL, active Supabase project URL is configured.
 const rawSupabaseUrl =
@@ -774,7 +774,7 @@ export async function upsertStudentProfile(
   if (supabase) {
     try {
       const domain = email.split('@')[1] || 'vitapstudent.ac.in';
-      await supabase.from('students').upsert({
+      const { error: studentError } = await supabase.from('students').upsert({
         id: userId,
         email,
         college_domain: domain,
@@ -803,7 +803,14 @@ export async function upsertStudentProfile(
         onboarding_completed: true,
         updated_at: new Date().toISOString(),
       });
-    } catch (e) {}
+      if (studentError) {
+        console.error('Supabase students upsert error:', studentError);
+        return { success: false, error: studentError.message };
+      }
+    } catch (e: any) {
+      console.error('Exception during student profile upsert:', e);
+      return { success: false, error: e?.message || 'Failed to update student profile.' };
+    }
   }
 
   return { success: true };
@@ -827,6 +834,7 @@ export function mapStudentRowToProfile(studentRow: any): UserProfile | undefined
     activityLevel: studentRow.activity_level,
     goal: studentRow.goal,
     dietPreference: studentRow.diet_preference,
+    messType: studentRow.mess_type || (studentRow.diet_preference === 'veg' ? 'veg' : 'non-veg'),
     allergies: studentRow.allergies || [],
     hasMedicalCondition: Boolean(studentRow.has_medical_condition),
     medicalNotes: studentRow.medical_notes,
@@ -842,6 +850,170 @@ export function mapStudentRowToProfile(studentRow: any): UserProfile | undefined
     isLiabilityGuardrailActive: Boolean(studentRow.is_liability_guardrail_active),
     dislikedDishIds: studentRow.disliked_dish_ids || [],
   };
+}
+
+/**
+ * Syncs a logged meal item to Supabase public.meal_logs.
+ */
+export async function syncMealLogToBackend(log: MealLogItem): Promise<void> {
+  if (!supabase) return;
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user?.id) return;
+    await supabase.from('meal_logs').insert({
+      user_id: session.user.id,
+      date_str: log.dateStr,
+      source: log.source,
+      meal_slot: log.mealSlot,
+      dish_id: log.dishId,
+      dish_name: log.dishName,
+      portion_count: log.portionCount || 1.0,
+      calories: log.calories,
+      protein: log.protein,
+      carbs: log.carbs,
+      fat: log.fat,
+    });
+  } catch (e) {
+    console.error('Error syncing meal log to Supabase:', e);
+  }
+}
+
+/**
+ * Deletes a meal log from Supabase public.meal_logs.
+ */
+export async function deleteMealLogFromBackend(logId?: string, dishId?: string, dateStr?: string): Promise<void> {
+  if (!supabase) return;
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user?.id) return;
+    let query = supabase.from('meal_logs').delete().eq('user_id', session.user.id);
+    if (dishId) {
+      query = query.eq('dish_id', dishId);
+    }
+    if (dateStr) {
+      query = query.eq('date_str', dateStr);
+    }
+    await query;
+  } catch (e) {
+    console.error('Error deleting meal log from Supabase:', e);
+  }
+}
+
+/**
+ * Clears all meal logs for a date from Supabase.
+ */
+export async function clearTodayMealLogsFromBackend(dateStr: string): Promise<void> {
+  if (!supabase) return;
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user?.id) return;
+    await supabase.from('meal_logs').delete().eq('user_id', session.user.id).eq('date_str', dateStr);
+  } catch (e) {
+    console.error('Error clearing meal logs from Supabase:', e);
+  }
+}
+
+/**
+ * Fetches the student's logged meals from Supabase for a date or all time.
+ */
+export async function fetchStudentMealLogsFromBackend(dateStr?: string): Promise<MealLogItem[]> {
+  if (!supabase) return [];
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session?.user?.id) return [];
+    let query = supabase.from('meal_logs').select('*').eq('user_id', session.user.id);
+    if (dateStr) {
+      query = query.eq('date_str', dateStr);
+    }
+    const { data, error } = await query.order('created_at', { ascending: false });
+    if (error || !data) return [];
+    return data.map((r: any) => ({
+      id: r.id,
+      dateStr: r.date_str,
+      source: r.source,
+      mealSlot: r.meal_slot,
+      dishId: r.dish_id,
+      dishName: r.dish_name,
+      portionCount: Number(r.portion_count) || 1.0,
+      calories: Number(r.calories),
+      protein: Number(r.protein),
+      carbs: Number(r.carbs),
+      fat: Number(r.fat),
+      timestamp: r.created_at,
+    }));
+  } catch (e) {
+    console.error('Error fetching meal logs from Supabase:', e);
+    return [];
+  }
+}
+
+/**
+ * Syncs a food court item to Supabase public.food_court_items.
+ */
+export async function syncFoodCourtItemToBackend(item: FoodCourtItem): Promise<void> {
+  if (!supabase) return;
+  try {
+    await supabase.from('food_court_items').upsert({
+      id: item.id,
+      shop_id: item.shopId,
+      shop_name: item.shopName,
+      name: item.name,
+      price: item.price,
+      category: item.category || 'veg',
+      calories: item.calories,
+      protein: item.protein,
+      carbs: item.carbs,
+      fat: item.fat,
+      fiber: (item as any).fiber || 0,
+      allergens: item.allergens || [],
+      portion_description: item.portionDescription || '1 serving',
+      is_popular: item.isPopular || false,
+    });
+  } catch (e) {
+    console.error('Error syncing food court item to Supabase:', e);
+  }
+}
+
+/**
+ * Deletes a food court item from Supabase public.food_court_items.
+ */
+export async function deleteFoodCourtItemFromBackend(itemId: string): Promise<void> {
+  if (!supabase) return;
+  try {
+    await supabase.from('food_court_items').delete().eq('id', itemId);
+  } catch (e) {
+    console.error('Error deleting food court item from Supabase:', e);
+  }
+}
+
+/**
+ * Fetches all food court items stored in Supabase public.food_court_items.
+ */
+export async function fetchFoodCourtItemsFromBackend(): Promise<FoodCourtItem[]> {
+  if (!supabase) return [];
+  try {
+    const { data, error } = await supabase.from('food_court_items').select('*');
+    if (error || !data) return [];
+    return data.map((r: any) => ({
+      id: r.id,
+      shopId: r.shop_id,
+      shopName: r.shop_name,
+      name: r.name,
+      price: Number(r.price),
+      category: r.category,
+      calories: Number(r.calories),
+      protein: Number(r.protein),
+      carbs: Number(r.carbs),
+      fat: Number(r.fat),
+      fiber: Number(r.fiber || 0),
+      allergens: r.allergens || [],
+      portionDescription: r.portion_description,
+      isPopular: Boolean(r.is_popular),
+    }));
+  } catch (e) {
+    console.error('Error fetching food court items from Supabase:', e);
+    return [];
+  }
 }
 
 /**

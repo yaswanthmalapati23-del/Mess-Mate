@@ -18,7 +18,12 @@ import {
 import { FoodCourtItem, FoodCourtShop, DietPreference } from '@/lib/types';
 import { FOOD_COURT_SHOPS, FOOD_COURT_ITEMS } from '@/lib/data/foodCourtItems';
 import { getStoredFoodCourtItems, saveStoredFoodCourtItems } from '@/lib/storage';
-import { supabase } from '@/lib/supabaseClient';
+import {
+  supabase,
+  syncFoodCourtItemToBackend,
+  deleteFoodCourtItemFromBackend,
+  fetchFoodCourtItemsFromBackend,
+} from '@/lib/supabaseClient';
 
 interface ExtendedFoodCourtItem extends FoodCourtItem {
   isAvailable?: boolean;
@@ -53,6 +58,26 @@ export const AdminFoodCourtEditor: React.FC = () => {
       isAvailable: it.isAvailable !== undefined ? it.isAvailable : true,
     }));
     setItems(enriched);
+
+    // Fetch and merge from Supabase backend
+    fetchFoodCourtItemsFromBackend().then((backendItems) => {
+      if (backendItems && backendItems.length > 0) {
+        setItems((current) => {
+          const map = new Map<string, ExtendedFoodCourtItem>();
+          current.forEach((it) => map.set(it.id, it));
+          backendItems.forEach((it) => {
+            const existing = map.get(it.id);
+            map.set(it.id, {
+              ...it,
+              isAvailable: existing?.isAvailable !== undefined ? existing.isAvailable : true,
+            });
+          });
+          const merged = Array.from(map.values());
+          saveStoredFoodCourtItems(merged);
+          return merged;
+        });
+      }
+    });
   }, []);
 
   const triggerSaveNotice = (msg: string) => {
@@ -62,16 +87,21 @@ export const AdminFoodCourtEditor: React.FC = () => {
 
   // Toggle availability in 1-click
   const handleToggleAvailability = (id: string) => {
+    let targetItem: ExtendedFoodCourtItem | undefined;
     const updated = items.map((item) => {
       if (item.id === id) {
         const nextState = !item.isAvailable;
-        return { ...item, isAvailable: nextState };
+        targetItem = { ...item, isAvailable: nextState };
+        return targetItem;
       }
       return item;
     });
 
     setItems(updated);
     saveStoredFoodCourtItems(updated);
+    if (targetItem) {
+      syncFoodCourtItemToBackend(targetItem).catch(() => {});
+    }
     triggerSaveNotice('Item availability updated.');
   };
 
@@ -82,6 +112,7 @@ export const AdminFoodCourtEditor: React.FC = () => {
     const updated = items.filter((item) => item.id !== id);
     setItems(updated);
     saveStoredFoodCourtItems(updated);
+    deleteFoodCourtItemFromBackend(id).catch(() => {});
     triggerSaveNotice(`Deleted "${name}".`);
   };
 
@@ -112,28 +143,25 @@ export const AdminFoodCourtEditor: React.FC = () => {
 
     if (editingItem) {
       // Update existing
-      const updated = items.map((item) => {
-        if (item.id === editingItem.id) {
-          return {
-            ...item,
-            shopId: formData.shopId,
-            shopName,
-            name: formData.name.trim(),
-            price: Number(formData.price),
-            category: formData.category,
-            calories: Number(formData.calories),
-            protein: Number(formData.protein),
-            carbs: Number(formData.carbs),
-            fat: Number(formData.fat),
-            portionDescription: formData.portionDescription,
-            isAvailable: formData.isAvailable,
-          };
-        }
-        return item;
-      });
+      const updatedItem: ExtendedFoodCourtItem = {
+        ...editingItem,
+        shopId: formData.shopId,
+        shopName,
+        name: formData.name.trim(),
+        price: Number(formData.price),
+        category: formData.category,
+        calories: Number(formData.calories),
+        protein: Number(formData.protein),
+        carbs: Number(formData.carbs),
+        fat: Number(formData.fat),
+        portionDescription: formData.portionDescription,
+        isAvailable: formData.isAvailable,
+      };
 
+      const updated = items.map((item) => (item.id === editingItem.id ? updatedItem : item));
       setItems(updated);
       saveStoredFoodCourtItems(updated);
+      syncFoodCourtItemToBackend(updatedItem).catch(() => {});
       triggerSaveNotice(`Updated "${formData.name}".`);
     } else {
       // Create new
@@ -157,6 +185,7 @@ export const AdminFoodCourtEditor: React.FC = () => {
       const updated = [newItem, ...items];
       setItems(updated);
       saveStoredFoodCourtItems(updated);
+      syncFoodCourtItemToBackend(newItem).catch(() => {});
       triggerSaveNotice(`Added new item "${formData.name}".`);
     }
 

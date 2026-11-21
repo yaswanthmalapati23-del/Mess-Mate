@@ -2,6 +2,11 @@ import { DailyMenuDay, DailyTrackingSummary, MealLogItem, UserProfile, FoodCourt
 import { MONTHLY_MESS_MENU, getMessMonthlyMenu } from './data/monthlyMenuData';
 import { FOOD_COURT_ITEMS } from './data/foodCourtItems';
 import { calculateNutritionProfile } from './nutrition/calculator';
+import {
+  syncMealLogToBackend,
+  deleteMealLogFromBackend,
+  clearTodayMealLogsFromBackend,
+} from './supabaseClient';
 
 const STORAGE_KEYS = {
   PROFILE: 'mess_mate_profile',
@@ -87,6 +92,9 @@ export function saveStoredLog(logItem: Omit<MealLogItem, 'id' | 'timestamp'>): M
     console.error('Error saving meal log', e);
   }
 
+  // Reach backend asynchronously
+  syncMealLogToBackend(fullItem).catch(() => {});
+
   return fullItem;
 }
 
@@ -108,6 +116,9 @@ export function saveStoredLogsBatch(logItems: Omit<MealLogItem, 'id' | 'timestam
     console.error('Error saving batch meal logs', e);
   }
 
+  // Reach backend asynchronously
+  newItems.forEach((item) => syncMealLogToBackend(item).catch(() => {}));
+
   return newItems;
 }
 
@@ -115,9 +126,14 @@ export function deleteStoredLog(logId: string): void {
   if (typeof window === 'undefined') return;
   try {
     const current = getStoredLogs();
+    const target = current.find((l) => l.id === logId);
     const filtered = current.filter((l) => l.id !== logId);
     localStorage.setItem(STORAGE_KEYS.LOGS, JSON.stringify(filtered));
     window.dispatchEvent(new Event('mess_mate_logs_updated'));
+
+    if (target) {
+      deleteMealLogFromBackend(logId, target.dishId, target.dateStr).catch(() => {});
+    }
   } catch (e) {
     console.error('Error deleting meal log', e);
   }
@@ -130,8 +146,34 @@ export function clearTodayLogs(dateStr: string): void {
     const filtered = current.filter((l) => l.dateStr !== dateStr);
     localStorage.setItem(STORAGE_KEYS.LOGS, JSON.stringify(filtered));
     window.dispatchEvent(new Event('mess_mate_logs_updated'));
+    clearTodayMealLogsFromBackend(dateStr).catch(() => {});
   } catch (e) {
     console.error('Error clearing today logs', e);
+  }
+}
+
+/**
+ * Merges meal logs fetched from backend into localStorage without triggering backend insert loops.
+ */
+export function mergeRemoteLogsIntoLocal(remoteLogs: MealLogItem[]): void {
+  if (typeof window === 'undefined' || !remoteLogs || remoteLogs.length === 0) return;
+  try {
+    const current = getStoredLogs();
+    const existingKeys = new Set(
+      current.map((l) => `${l.dateStr}_${l.mealSlot}_${l.dishId}`)
+    );
+
+    const toAdd = remoteLogs.filter(
+      (r) => !existingKeys.has(`${r.dateStr}_${r.mealSlot}_${r.dishId}`)
+    );
+
+    if (toAdd.length > 0) {
+      const merged = [...toAdd, ...current];
+      localStorage.setItem(STORAGE_KEYS.LOGS, JSON.stringify(merged));
+      window.dispatchEvent(new Event('mess_mate_logs_updated'));
+    }
+  } catch (e) {
+    console.error('Error merging remote meal logs into localStorage:', e);
   }
 }
 
