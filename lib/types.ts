@@ -156,6 +156,11 @@ export interface FoodCourtShop {
   icon: string;
   priceRange: string;
   popularItemName: string;
+  subcategories?: string[];
+  themeColor?: string;
+  cardColor?: string;
+  textColor?: string;
+  categoryTag?: string;
 }
 
 export interface FoodCourtItem {
@@ -165,6 +170,7 @@ export interface FoodCourtItem {
   name: string;
   price: number; // Price in INR (₹)
   category: DietPreference;
+  subcategory?: string;
   calories: number;
   protein: number;
   carbs: number;

@@ -39,7 +39,7 @@ export const AdminFoodCourtEditor: React.FC = () => {
 
   // Form state for new / edited item
   const [formData, setFormData] = useState({
-    shopId: 'shop_rolls',
+    shopId: 'shop_cake_stories',
     name: '',
     price: 80,
     category: 'veg' as DietPreference,
@@ -223,7 +223,7 @@ export const AdminFoodCourtEditor: React.FC = () => {
           onClick={() => {
             setEditingItem(null);
             setFormData({
-              shopId: 'shop_rolls',
+              shopId: 'shop_cake_stories',
               name: '',
               price: 80,
               category: 'veg',

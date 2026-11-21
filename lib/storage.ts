@@ -290,9 +290,17 @@ export function calculateStreak(): { currentStreak: number; bestStreak: number }
 export function getStoredFoodCourtItems(): FoodCourtItem[] {
   if (typeof window === 'undefined') return FOOD_COURT_ITEMS;
   try {
-    const raw = localStorage.getItem('mess_mate_food_court_items');
-    if (!raw) return FOOD_COURT_ITEMS;
+    const raw = localStorage.getItem('mess_mate_food_court_items_v2');
+    if (!raw) {
+      localStorage.setItem('mess_mate_food_court_items_v2', JSON.stringify(FOOD_COURT_ITEMS));
+      return FOOD_COURT_ITEMS;
+    }
     const parsed = JSON.parse(raw);
+    // If cache holds legacy demo shops, upgrade to real food court items
+    if (Array.isArray(parsed) && parsed.some((it: any) => it.shopId === 'shop_rolls' || it.shopId === 'shop_tapri')) {
+      localStorage.setItem('mess_mate_food_court_items_v2', JSON.stringify(FOOD_COURT_ITEMS));
+      return FOOD_COURT_ITEMS;
+    }
     return parsed.length > 0 ? parsed : FOOD_COURT_ITEMS;
   } catch (e) {
     return FOOD_COURT_ITEMS;
@@ -302,7 +310,7 @@ export function getStoredFoodCourtItems(): FoodCourtItem[] {
 export function saveStoredFoodCourtItems(items: any[]): void {
   if (typeof window === 'undefined') return;
   try {
-    localStorage.setItem('mess_mate_food_court_items', JSON.stringify(items));
+    localStorage.setItem('mess_mate_food_court_items_v2', JSON.stringify(items));
   } catch (e) {
     console.error('Error saving food court items', e);
   }
