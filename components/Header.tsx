@@ -53,6 +53,8 @@ export const Header: React.FC<HeaderProps> = ({
   const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
   const [isInstalled, setIsInstalled] = useState(false);
+  const [isAndroidApp, setIsAndroidApp] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   const [isDownloadedMenu, setIsDownloadedMenu] = useState(false);
   const [todayLogs, setTodayLogs] = useState<MealLogItem[]>([]);
@@ -66,11 +68,27 @@ export const Header: React.FC<HeaderProps> = ({
   };
 
   useEffect(() => {
+    setMounted(true);
     if (typeof window !== 'undefined') {
       const isStandalone =
         window.matchMedia('(display-mode: standalone)').matches ||
         (window.navigator as any).standalone === true;
       setIsInstalled(Boolean(isStandalone));
+
+      const isApk =
+        window.navigator.userAgent.includes('MessMateApp') ||
+        window.location.search.includes('source=apk') ||
+        window.location.search.includes('apk') ||
+        localStorage.getItem('messmate_is_apk') === 'true' ||
+        Boolean(isStandalone);
+
+      if (window.navigator.userAgent.includes('MessMateApp') || window.location.search.includes('source=apk')) {
+        try {
+          localStorage.setItem('messmate_is_apk', 'true');
+        } catch (_) {}
+      }
+
+      setIsAndroidApp(Boolean(isApk));
 
       const ua = window.navigator.userAgent.toLowerCase();
       setIsIOS(/iphone|ipad|ipod/.test(ua));
@@ -171,7 +189,12 @@ export const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <header className="sticky top-0 z-30 bg-[#FBF9F4]/90 backdrop-blur-xl border-b border-[#A9BFB5]/20 px-4 py-2.5 transition-colors shadow-[0_1px_8px_rgba(20,48,38,0.04)] font-sans">
+      <header
+        style={{
+          paddingTop: 'max(12px, env(safe-area-inset-top, 12px))',
+        }}
+        className="sticky top-0 z-40 bg-[#FBF9F4]/95 backdrop-blur-xl border-b border-[#A9BFB5]/25 px-4 pb-2.5 transition-colors shadow-[0_1px_8px_rgba(20,48,38,0.04)] font-sans"
+      >
         <div className="max-w-md mx-auto flex items-center justify-between">
           {/* Left: Brand & University Subtitle with App Logo */}
           <button
@@ -183,7 +206,7 @@ export const Header: React.FC<HeaderProps> = ({
               }
             }}
             title="Replay Mess Mate Starting Animation"
-            className="flex items-center space-x-2.5 text-left group cursor-pointer focus:outline-none active:scale-95 transition-transform"
+            className="flex items-center space-x-2.5 text-left group cursor-pointer focus:outline-none active:scale-95 transition-transform shrink-0"
           >
             <div className="w-11 h-8 rounded-xl bg-white border border-[#A9BFB5]/30 p-0.5 shadow-xs flex items-center justify-center overflow-hidden group-hover:scale-105 group-hover:border-[#1B5E4A]/40 transition-all duration-200">
               <img
@@ -202,17 +225,19 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </button>
 
-          {/* Right: Download Button, Interactive Calorie Counter Pill & Profile Avatar */}
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={() => setIsDownloadModalOpen(true)}
-              title="Download & Install Mess Mate App"
-              aria-label="Download Mess Mate"
-              className="flex items-center space-x-1.5 bg-white border border-[#A9BFB5]/30 px-2.5 py-1.5 rounded-full shadow-xs hover:border-[#1B5E4A]/50 hover:bg-[#F5F3EE] text-[#143026] hover:text-[#1B5E4A] transition-all text-xs active:scale-95 cursor-pointer font-bold group"
-            >
-              <Download className="w-3.5 h-3.5 text-[#1B5E4A] group-hover:scale-110 transition-transform" />
-              <span className="hidden sm:inline text-[11px] font-bold">Download</span>
-            </button>
+          {/* Right: Download (web-only), Interactive Calorie Counter Pill & Profile Avatar */}
+          <div className="flex items-center space-x-2 shrink-0">
+            {mounted && !isInstalled && !isAndroidApp && (
+              <button
+                onClick={() => setIsDownloadModalOpen(true)}
+                title="Download & Install Mess Mate App"
+                aria-label="Download Mess Mate"
+                className="flex items-center space-x-1.5 bg-white border border-[#A9BFB5]/30 px-2.5 py-1.5 rounded-full shadow-xs hover:border-[#1B5E4A]/50 hover:bg-[#F5F3EE] text-[#143026] hover:text-[#1B5E4A] transition-all text-xs active:scale-95 cursor-pointer font-bold group"
+              >
+                <Download className="w-3.5 h-3.5 text-[#1B5E4A] group-hover:scale-110 transition-transform" />
+                <span className="hidden sm:inline text-[11px] font-bold">Download</span>
+              </button>
+            )}
 
             <button
               onClick={() => {
@@ -220,7 +245,7 @@ export const Header: React.FC<HeaderProps> = ({
                 setIsModalOpen(true);
               }}
               title="View daily calorie breakdown and logged items"
-              className="flex items-center space-x-1.5 bg-white border border-[#A9BFB5]/30 px-3 py-1.5 rounded-full shadow-xs hover:border-[#1B5E4A]/50 hover:bg-[#F5F3EE] transition-all text-xs active:scale-95 cursor-pointer"
+              className="flex items-center space-x-1.5 bg-white border border-[#A9BFB5]/30 px-3 py-1.5 rounded-full shadow-xs hover:border-[#1B5E4A]/50 hover:bg-[#F5F3EE] transition-all text-xs active:scale-95 cursor-pointer min-h-[36px]"
             >
               <span className="text-orange-500 text-xs font-bold leading-none select-none">🔥</span>
               <span className="font-extrabold text-[#143026]">
@@ -234,7 +259,7 @@ export const Header: React.FC<HeaderProps> = ({
             <button
               onClick={onOpenProfile}
               aria-label="Profile"
-              className="w-8 h-8 rounded-full bg-[#1B5E4A] hover:bg-[#004534] flex items-center justify-center text-white text-xs font-bold shadow-xs active:scale-95 transition-all cursor-pointer"
+              className="w-9 h-9 rounded-full bg-[#1B5E4A] hover:bg-[#004534] flex items-center justify-center text-white text-xs font-bold shadow-xs active:scale-95 transition-all cursor-pointer shrink-0"
             >
               <User className="w-4 h-4 text-white" />
             </button>

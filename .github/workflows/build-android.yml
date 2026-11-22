@@ -55,16 +55,16 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
         with:
-          tag_name: v1.0.1
-          name: 'Mess Mate Android App v1.0.1'
+          tag_name: v1.0.2
+          name: 'Mess Mate Android App v1.0.2'
           make_latest: true
           body: |
-            ### 📱 Mess Mate Android Application (Full Vercel Edition)
-            Official Android release for **Mess Mate** — Complete Campus Nutrition, Real Food Court Outlets, Daily Menus & Fit Scores.
+            ### 📱 Mess Mate Android Application (Full Vercel Edition v1.0.2)
+            Official Android release for **Mess Mate** — Complete Campus Nutrition, Real Food Court Outlets, Daily Menus, Weekly Goal Summary with Macro Donut Chart & Fit Scores.
             
             #### 📥 Direct APK Downloads:
-            - **[MessMate.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.1/MessMate.apk)** (Latest v1.0.1)
-            - **[MessMate-latest.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.1/MessMate-latest.apk)**
+            - **[MessMate.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.2/MessMate.apk)** (Latest v1.0.2)
+            - **[MessMate-latest.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.2/MessMate-latest.apk)**
             
             #### 🚀 Installation Instructions:
             1. Download `MessMate.apk` on your Android phone.

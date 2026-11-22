@@ -253,11 +253,12 @@ export const StitchDashboard: React.FC<StitchDashboardProps> = ({
         </div>
 
         <button
+          type="button"
           onClick={() => onNavigateTab('monthly')}
-          className="w-10 h-10 rounded-2xl bg-[#D6E6DC] text-[#1B5E4A] hover:bg-[#c4ded0] active:scale-95 flex items-center justify-center transition-all shadow-xs cursor-pointer"
-          title="Open Monthly Menu"
+          className="w-11 h-11 rounded-2xl bg-[#D6E6DC] text-[#1B5E4A] hover:bg-[#c4ded0] active:scale-90 flex items-center justify-center transition-all shadow-xs cursor-pointer shrink-0 z-10"
+          title="Open Weekly Goal Summary & Mess Menu"
         >
-          <Calendar className="w-4 h-4 text-[#1B5E4A]" />
+          <Calendar className="w-5 h-5 text-[#1B5E4A]" />
         </button>
       </div>
 

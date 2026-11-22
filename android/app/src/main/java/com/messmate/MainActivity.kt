@@ -24,7 +24,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var webView: WebView
     private lateinit var progressBar: ProgressBar
-    private val appUrl = "https://mess-mate-dun.vercel.app/"
+    private val appUrl = "https://mess-mate-dun.vercel.app/?source=apk"
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
