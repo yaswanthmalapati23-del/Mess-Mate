@@ -10,12 +10,7 @@ import {
   ArrowRight,
   Utensils,
   RotateCcw,
-  Download,
-  Smartphone,
-  Share,
   CheckCircle,
-  FileText,
-  Check,
 } from 'lucide-react';
 import { UserProfile, MealLogItem } from '@/lib/types';
 import {
@@ -23,7 +18,6 @@ import {
   deleteStoredLog,
   clearTodayLogs,
   getTodayDateStr,
-  getMonthlyMenu,
 } from '@/lib/storage';
 import { DISH_LOOKUP } from '@/lib/data/messDishes';
 
@@ -50,13 +44,6 @@ export const Header: React.FC<HeaderProps> = ({
   onReplayAnimation,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
-  const [isInstalled, setIsInstalled] = useState(false);
-  const [isAndroidApp, setIsAndroidApp] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const [isIOS, setIsIOS] = useState(false);
-  const [isDownloadedMenu, setIsDownloadedMenu] = useState(false);
   const [todayLogs, setTodayLogs] = useState<MealLogItem[]>([]);
 
   const todayStr = getTodayDateStr();
@@ -65,97 +52,6 @@ export const Header: React.FC<HeaderProps> = ({
   const refreshLogs = () => {
     const logs = getStoredLogs().filter((l) => l.dateStr === todayStr);
     setTodayLogs(logs);
-  };
-
-  useEffect(() => {
-    setMounted(true);
-    if (typeof window !== 'undefined') {
-      const isStandalone =
-        window.matchMedia('(display-mode: standalone)').matches ||
-        (window.navigator as any).standalone === true;
-      setIsInstalled(Boolean(isStandalone));
-
-      const isApk =
-        window.navigator.userAgent.includes('MessMateApp') ||
-        window.location.search.includes('source=apk') ||
-        window.location.search.includes('apk') ||
-        localStorage.getItem('messmate_is_apk') === 'true' ||
-        Boolean(isStandalone);
-
-      if (window.navigator.userAgent.includes('MessMateApp') || window.location.search.includes('source=apk')) {
-        try {
-          localStorage.setItem('messmate_is_apk', 'true');
-        } catch (_) {}
-      }
-
-      setIsAndroidApp(Boolean(isApk));
-
-      const ua = window.navigator.userAgent.toLowerCase();
-      setIsIOS(/iphone|ipad|ipod/.test(ua));
-
-      const handleBeforeInstall = (e: Event) => {
-        e.preventDefault();
-        setDeferredPrompt(e);
-      };
-
-      const handleAppInstalled = () => {
-        setIsInstalled(true);
-        setDeferredPrompt(null);
-      };
-
-      window.addEventListener('beforeinstallprompt', handleBeforeInstall);
-      window.addEventListener('appinstalled', handleAppInstalled);
-
-      return () => {
-        window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
-        window.removeEventListener('appinstalled', handleAppInstalled);
-      };
-    }
-  }, []);
-
-  const handleInstallApp = async () => {
-    if (deferredPrompt) {
-      try {
-        await deferredPrompt.prompt();
-        const choice = await deferredPrompt.userChoice;
-        if (choice?.outcome === 'accepted') {
-          setIsInstalled(true);
-        }
-        setDeferredPrompt(null);
-      } catch (err) {
-        console.error('Install prompt error:', err);
-      }
-    }
-  };
-
-  const handleDownloadMenuCSV = () => {
-    try {
-      const menu = getMonthlyMenu(profile.messType || 'non-veg');
-      let csv = 'Day,Day of Week,Meal Slot,Dishes\n';
-      menu.forEach((d) => {
-        const slots = ['breakfast', 'lunch', 'snacks', 'dinner'] as const;
-        slots.forEach((meal) => {
-          const slotIds = (d.slots as any)?.[meal] || [];
-          const dishNames = slotIds
-            .map((id: string) => DISH_LOOKUP.get(id)?.name || id)
-            .join('; ');
-          csv += `Day ${d.dayNumber},${d.dayOfWeek},${meal},"${dishNames.replace(/"/g, '""')}"\n`;
-        });
-      });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `Mess_Mate_${profile.messType || 'menu'}_Schedule.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-      setIsDownloadedMenu(true);
-      setTimeout(() => setIsDownloadedMenu(false), 3000);
-    } catch (e) {
-      console.error('Error generating menu download:', e);
-    }
   };
 
   useEffect(() => {
@@ -225,20 +121,8 @@ export const Header: React.FC<HeaderProps> = ({
             </div>
           </button>
 
-          {/* Right: Download (web-only), Interactive Calorie Counter Pill & Profile Avatar */}
+          {/* Right: Interactive Calorie Counter Pill & Profile Avatar */}
           <div className="flex items-center space-x-2 shrink-0">
-            {mounted && !isInstalled && !isAndroidApp && (
-              <button
-                onClick={() => setIsDownloadModalOpen(true)}
-                title="Download & Install Mess Mate App"
-                aria-label="Download Mess Mate"
-                className="flex items-center space-x-1.5 bg-white border border-[#A9BFB5]/30 px-2.5 py-1.5 rounded-full shadow-xs hover:border-[#1B5E4A]/50 hover:bg-[#F5F3EE] text-[#143026] hover:text-[#1B5E4A] transition-all text-xs active:scale-95 cursor-pointer font-bold group"
-              >
-                <Download className="w-3.5 h-3.5 text-[#1B5E4A] group-hover:scale-110 transition-transform" />
-                <span className="hidden sm:inline text-[11px] font-bold">Download</span>
-              </button>
-            )}
-
             <button
               onClick={() => {
                 refreshLogs();
@@ -427,124 +311,6 @@ export const Header: React.FC<HeaderProps> = ({
               <button
                 onClick={() => setIsModalOpen(false)}
                 className="py-2.5 px-4 rounded-full bg-[#F5F3EE] hover:bg-[#EAE8E3] text-[#143026] text-xs font-bold cursor-pointer transition-colors"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Download & Install Mess Mate Modal */}
-      {isDownloadModalOpen && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-fade-in font-sans">
-          <div className="bg-white rounded-3xl p-5 max-w-sm w-full shadow-2xl border border-[#A9BFB5]/30 space-y-4 max-h-[90vh] flex flex-col">
-            {/* Modal Header */}
-            <div className="flex items-center justify-between border-b border-[#A9BFB5]/20 pb-3">
-              <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-2xl bg-[#D6E6DC] text-[#1B5E4A] flex items-center justify-center shadow-xs">
-                  <Download className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="text-base font-extrabold text-[#143026] leading-tight">
-                    Download Mess Mate
-                  </h3>
-                  <span className="text-[11px] text-[#5F7A6E]">Instant campus nutrition app</span>
-                </div>
-              </div>
-              <button
-                onClick={() => setIsDownloadModalOpen(false)}
-                className="w-8 h-8 rounded-full bg-[#F5F3EE] hover:bg-[#EAE8E3] flex items-center justify-center text-[#5F7A6E] cursor-pointer transition-colors"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-
-            {/* App Install Option */}
-            <div className="space-y-3">
-              <div className="bg-[#F5F3EE] rounded-2xl p-4 border border-[#A9BFB5]/20 space-y-2.5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Smartphone className="w-4 h-4 text-[#1B5E4A]" />
-                    <span className="font-extrabold text-sm text-[#143026]">Install Mobile / Desktop App</span>
-                  </div>
-                  {isInstalled && (
-                    <span className="flex items-center gap-1 text-[10px] font-bold text-[#1B5E4A] bg-[#D6E6DC] px-2 py-0.5 rounded-full">
-                      <CheckCircle className="w-3 h-3" /> Installed
-                    </span>
-                  )}
-                </div>
-
-                <p className="text-xs text-[#5F7A6E] leading-relaxed">
-                  Install Mess Mate to your home screen or desktop for 1-tap offline access, fast loading, and daily meal reminders.
-                </p>
-
-                {deferredPrompt ? (
-                  <button
-                    onClick={handleInstallApp}
-                    className="w-full py-2.5 px-4 rounded-xl bg-[#1B5E4A] hover:bg-[#004534] text-white text-xs font-bold flex items-center justify-center gap-2 shadow-xs active:scale-95 transition-all cursor-pointer"
-                  >
-                    <Download className="w-4 h-4" />
-                    <span>Install App Now</span>
-                  </button>
-                ) : isIOS ? (
-                  <div className="bg-white/80 rounded-xl p-3 border border-[#A9BFB5]/30 text-xs space-y-1.5 text-[#143026]">
-                    <div className="font-bold flex items-center gap-1.5 text-[#1B5E4A]">
-                      <Share className="w-3.5 h-3.5" />
-                      <span>iOS Safari Install Steps:</span>
-                    </div>
-                    <ol className="list-decimal list-inside text-[11px] text-[#5F7A6E] space-y-0.5">
-                      <li>Tap the <strong>Share</strong> button at the bottom of Safari.</li>
-                      <li>Scroll down and select <strong>Add to Home Screen</strong>.</li>
-                      <li>Tap <strong>Add</strong> in the top-right corner.</li>
-                    </ol>
-                  </div>
-                ) : (
-                  <div className="bg-white/80 rounded-xl p-3 border border-[#A9BFB5]/30 text-xs space-y-1.5 text-[#143026]">
-                    <div className="font-bold flex items-center gap-1.5 text-[#1B5E4A]">
-                      <Smartphone className="w-3.5 h-3.5" />
-                      <span>Browser Install Instructions:</span>
-                    </div>
-                    <p className="text-[11px] text-[#5F7A6E]">
-                      Open your browser menu (<strong>⋮</strong> or settings) and tap <strong>&quot;Install app&quot;</strong> or <strong>&quot;Add to Home Screen&quot;</strong>.
-                    </p>
-                  </div>
-                )}
-              </div>
-
-              {/* Offline Menu Download Option */}
-              <div className="bg-[#F5F3EE] rounded-2xl p-4 border border-[#A9BFB5]/20 space-y-2">
-                <div className="flex items-center gap-2">
-                  <FileText className="w-4 h-4 text-[#1B5E4A]" />
-                  <span className="font-extrabold text-sm text-[#143026]">Download Monthly Menu</span>
-                </div>
-                <p className="text-xs text-[#5F7A6E] leading-relaxed">
-                  Download the complete monthly cycle menu schedule as a spreadsheet file (.csv) to keep offline.
-                </p>
-                <button
-                  onClick={handleDownloadMenuCSV}
-                  className="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-[#EAE8E3] border border-[#A9BFB5]/30 text-[#143026] text-xs font-bold flex items-center justify-center gap-2 shadow-xs active:scale-95 transition-all cursor-pointer"
-                >
-                  {isDownloadedMenu ? (
-                    <>
-                      <Check className="w-4 h-4 text-[#1B5E4A]" />
-                      <span className="text-[#1B5E4A]">Downloaded Successfully!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Download className="w-4 h-4 text-[#1B5E4A]" />
-                      <span>Download Menu Schedule (.CSV)</span>
-                    </>
-                  )}
-                </button>
-              </div>
-            </div>
-
-            {/* Close Button */}
-            <div className="pt-2 border-t border-[#A9BFB5]/20 flex justify-end">
-              <button
-                onClick={() => setIsDownloadModalOpen(false)}
-                className="py-2 px-4 rounded-full bg-[#F5F3EE] hover:bg-[#EAE8E3] text-[#143026] text-xs font-bold cursor-pointer transition-colors"
               >
                 Close
               </button>

@@ -38,7 +38,6 @@ export const MonthlyPlanView: React.FC<MonthlyPlanViewProps> = ({
 }) => {
   const [activeSubTab, setActiveSubTab] = useState<'summary' | 'menu'>('summary');
   const [filterChoice, setFilterChoice] = useState<'all' | 'veg' | 'protein'>('all');
-  const [isDownloaded, setIsDownloaded] = useState(false);
 
   // User Goal and Targets
   const targetCalories = profile.targetCalories || 2200;
@@ -134,36 +133,6 @@ export const MonthlyPlanView: React.FC<MonthlyPlanViewProps> = ({
       adherenceScore,
     };
   }, [targetCalories, targetProtein, targetCarbs, targetFats]);
-
-  // CSV download handler
-  const handleDownloadMenuCSV = () => {
-    try {
-      let csv = 'Day,Day of Week,Meal Slot,Dishes\n';
-      monthlyMenu.forEach((d) => {
-        const slots = ['breakfast', 'lunch', 'snacks', 'dinner'] as const;
-        slots.forEach((meal) => {
-          const slotIds = (d.slots as any)?.[meal] || [];
-          const dishNames = slotIds
-            .map((id: string) => DISH_LOOKUP.get(id)?.name || id)
-            .join('; ');
-          csv += `Day ${d.dayNumber},${d.dayOfWeek},${meal},"${dishNames.replace(/"/g, '""')}"\n`;
-        });
-      });
-      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-      const url = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', `Mess_Mate_Menu_Schedule.csv`);
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      URL.revokeObjectURL(url);
-      setIsDownloaded(true);
-      setTimeout(() => setIsDownloaded(false), 3000);
-    } catch (e) {
-      console.error('Error exporting menu CSV:', e);
-    }
-  };
 
   const activeDay = monthlyMenu.find((d) => d.dayNumber === selectedDayNumber) || monthlyMenu[0];
 
@@ -525,14 +494,10 @@ export const MonthlyPlanView: React.FC<MonthlyPlanViewProps> = ({
               </h3>
             </div>
 
-            <button
-              type="button"
-              onClick={handleDownloadMenuCSV}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#1B5E4A] text-white text-xs font-bold shadow-xs active:scale-95 cursor-pointer hover:bg-[#004534] transition-all"
-            >
-              {isDownloaded ? <Check className="w-3.5 h-3.5" /> : <Download className="w-3.5 h-3.5" />}
-              <span>{isDownloaded ? 'Downloaded' : 'Download CSV'}</span>
-            </button>
+            <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#D6E6DC] text-[#1B5E4A] text-[11px] font-extrabold shadow-xs">
+              <span className="w-2 h-2 rounded-full bg-[#1B5E4A] animate-pulse" />
+              <span>30-Day Cycle Active</span>
+            </div>
           </div>
 
           {/* Horizontal 30-day picker */}
