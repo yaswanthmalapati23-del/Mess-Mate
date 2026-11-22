@@ -1,14 +1,14 @@
 import { createClient } from '@supabase/supabase-js';
 
-const url = 'https://ulopleqlfdyuicqajkcp.supabase.co';
-const key = 'sb_publishable_jrhBD1xywfukrCc0PtqZvg_FW5b8TO5';
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
+const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '';
 
 const supabase = createClient(url, key);
 
 async function testOtp() {
-  console.log('Sending OTP via Supabase Auth to yaswanth.26bce7370@vitapstudent.ac.in...');
+  console.log('Sending OTP via Supabase Auth to test student...');
   const { data, error } = await supabase.auth.signInWithOtp({
-    email: 'yaswanth.26bce7370@vitapstudent.ac.in',
+    email: 'test.student@vitapstudent.ac.in',
     options: {
       shouldCreateUser: true,
     },

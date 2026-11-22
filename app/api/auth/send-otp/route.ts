@@ -3,22 +3,27 @@ import { createClient } from '@supabase/supabase-js';
 import { isAllowedCollegeEmail } from '@/lib/supabaseClient';
 import { rateLimit, getClientIp } from '@/lib/auth/rateLimit';
 
-const supabaseUrl =
-  process.env.NEXT_PUBLIC_SUPABASE_URL ||
-  process.env.SUPABASE_URL ||
-  'https://ulopleqlfdyuicqajkcp.supabase.co';
-
-const supabaseAnonKey =
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
-  process.env.SUPABASE_PUBLISHABLE_KEY ||
-  process.env.SUPABASE_ANON_KEY ||
-  'sb_publishable_jrhBD1xywfukrCc0PtqZvg_FW5b8TO5';
-
-const supabase = createClient(supabaseUrl, supabaseAnonKey);
+function getSupabase() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL;
+  const key =
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
+    process.env.SUPABASE_PUBLISHABLE_KEY ||
+    process.env.SUPABASE_ANON_KEY;
+  if (!url || !key) return null;
+  return createClient(url, key);
+}
 
 export async function POST(req: NextRequest) {
   try {
+    const supabase = getSupabase();
+    if (!supabase) {
+      return NextResponse.json(
+        { success: false, error: 'Database service is not configured.' },
+        { status: 503 }
+      );
+    }
+
     const body = await req.json();
     const email = (body?.email || '').trim().toLowerCase();
     const mode = (body?.mode || 'signin') as 'signin' | 'signup';

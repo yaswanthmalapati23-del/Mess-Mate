@@ -1,18 +1,18 @@
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { UserProfile, StudentAccount, MealLogItem, FoodCourtItem } from './types';
 
-// Detect whether a REAL, active Supabase project URL is configured.
+// Detect whether a REAL, active Supabase project URL is configured via environment variables.
 const rawSupabaseUrl =
   process.env.NEXT_PUBLIC_SUPABASE_URL ||
   process.env.SUPABASE_URL ||
-  'https://ulopleqlfdyuicqajkcp.supabase.co';
+  '';
 
 const rawSupabaseAnonKey =
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ||
   process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ||
   process.env.SUPABASE_PUBLISHABLE_KEY ||
   process.env.SUPABASE_ANON_KEY ||
-  'sb_publishable_jrhBD1xywfukrCc0PtqZvg_FW5b8TO5';
+  '';
 
 const isBlacklistedUrl = (url: string) => {
   return !url || url.includes('example.supabase.co');

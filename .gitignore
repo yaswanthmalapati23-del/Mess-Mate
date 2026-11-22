@@ -42,3 +42,9 @@ android/local.properties
 .idea/
 *.iml
 .agentschat/
+
+# Private & Sensitive Assets (Menu photos, outlet photos)
+menu/
+public/outlets/
+*.jpeg
+*.jpg

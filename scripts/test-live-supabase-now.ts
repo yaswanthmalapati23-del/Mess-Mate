@@ -1,14 +1,15 @@
 import dns from 'dns';
 import { createClient } from '@supabase/supabase-js';
 
-const url = 'https://ulopleqlfdyuicqajkcp.supabase.co';
-const key = 'sb_publishable_jrhBD1xywfukrCc0PtqZvg_FW5b8TO5';
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
+const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '';
 
-console.log('--- Testing Supabase project: ulopleqlfdyuicqajkcp ---');
+const host = url ? new URL(url).hostname : 'localhost';
+console.log('--- Testing Supabase project host:', host, '---');
 
-dns.lookup('ulopleqlfdyuicqajkcp.supabase.co', async (err, address) => {
+dns.lookup(host, async (err, address) => {
   if (err) {
-    console.log('DNS lookup failed for ulopleqlfdyuicqajkcp.supabase.co:', err.code);
+    console.log(`DNS lookup failed for ${host}:`, err.code);
   } else {
     console.log('✅ DNS resolved successfully! IP:', address);
     

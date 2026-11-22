@@ -1,7 +1,7 @@
 import { createClient } from '@supabase/supabase-js';
 
-const url = 'https://ulopleqlfdyuicqajkcp.supabase.co';
-const key = 'sb_publishable_jrhBD1xywfukrCc0PtqZvg_FW5b8TO5';
+const url = process.env.NEXT_PUBLIC_SUPABASE_URL || process.env.SUPABASE_URL || '';
+const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.SUPABASE_ANON_KEY || '';
 const supabase = createClient(url, key);
 
 async function testEmail(email: string) {
@@ -18,7 +18,7 @@ async function run() {
   await testEmail('student@gmail.com');
   await testEmail('student@vitap.ac.in');
   await testEmail('student.21bce0001@vitapstudent.ac.in');
-  await testEmail('yaswanthmalapati23@gmail.com');
+  await testEmail('testuser@example.com');
 }
 
 run();

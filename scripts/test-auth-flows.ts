@@ -6,7 +6,7 @@ import {
 
 async function testAuth() {
   console.log('--- 1. Testing College Email Validation ---');
-  const validCollege = isAllowedCollegeEmail('yaswanth.26bce7370@vitapstudent.ac.in');
+  const validCollege = isAllowedCollegeEmail('21bce1001@vitapstudent.ac.in');
   console.log('Valid college email:', validCollege);
   if (!validCollege.valid || !validCollege.isCollegeDomain) throw new Error('Failed college email validation');
 
@@ -15,8 +15,8 @@ async function testAuth() {
   if (invalidEmail.valid) throw new Error('Malformed email should be rejected');
 
   console.log('\n--- 2. Testing New Student Registration ---');
-  const testEmail = 'yaswanth.26bce7370@vitapstudent.ac.in';
-  const testPass = 'YaswanthSecure123';
+  const testEmail = '21bce1001@vitapstudent.ac.in';
+  const testPass = 'TestStudentSecure123!';
 
   const regRes = await registerStudentWithPassword(testEmail, testPass);
   console.log('Registration Result:', regRes);
