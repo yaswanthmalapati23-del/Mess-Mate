@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.messmate.ui.components.*
 import com.messmate.ui.theme.*
 
+@OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 @Composable
 fun NourishHomeScreen(
     onNavigateToMealDetail: () -> Unit = {},
