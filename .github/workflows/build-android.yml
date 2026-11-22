@@ -1,0 +1,79 @@
+name: Build and Release Android App
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'android/**'
+      - '.github/workflows/build-android.yml'
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Android APK & Publish Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Grant Execute Permission for Gradlew
+        run: chmod +x android/gradlew
+
+      - name: Build Android Release APK
+        run: |
+          cd android
+          ./gradlew assembleRelease --stacktrace
+
+      - name: Prepare APK Asset
+        run: |
+          mkdir -p dist
+          cp android/app/build/outputs/apk/release/*.apk dist/MessMate-latest.apk
+          cp dist/MessMate-latest.apk dist/MessMate.apk
+          ls -la dist/
+
+      - name: Upload APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MessMate-Android-APK
+          path: dist/*.apk
+
+      - name: Create or Update GitHub Release
+        uses: softprops/action-gh-release@v2
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+        with:
+          tag_name: v1.0.0
+          name: 'Mess Mate Android App v1.0.0'
+          body: |
+            ### 📱 Mess Mate Android Application
+            Official Android release for **Mess Mate** — Intelligent Campus Nutrition for College Students.
+            
+            #### 📥 Download:
+            - **[MessMate.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.0/MessMate.apk)** (Direct Download)
+            - **[MessMate-latest.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.0/MessMate-latest.apk)**
+            
+            #### 🚀 How to Install:
+            1. Download `MessMate.apk` directly onto your Android device.
+            2. Tap the downloaded file and select **Install**.
+            3. If prompted, allow "Install from unknown sources" for your browser/file manager.
+            4. Open Mess Mate and enjoy campus nutrition tracking!
+          files: |
+            dist/MessMate.apk
+            dist/MessMate-latest.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
