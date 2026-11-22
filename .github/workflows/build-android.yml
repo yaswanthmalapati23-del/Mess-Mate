@@ -41,8 +41,8 @@ jobs:
       - name: Prepare APK Asset
         run: |
           mkdir -p dist
-          cp android/app/build/outputs/apk/release/*.apk dist/MessMate-latest.apk
-          cp dist/MessMate-latest.apk dist/MessMate.apk
+          find android/app/build/outputs/apk -name "*.apk" -exec cp {} dist/MessMate.apk \;
+          cp dist/MessMate.apk dist/MessMate-latest.apk
           ls -la dist/
 
       - name: Upload APK Artifact
@@ -57,17 +57,24 @@ jobs:
         with:
           tag_name: v1.0.0
           name: 'Mess Mate Android App v1.0.0'
+          make_latest: true
           body: |
             ### 📱 Mess Mate Android Application
             Official Android release for **Mess Mate** — Intelligent Campus Nutrition for College Students.
             
-            #### 📥 Download:
-            - **[MessMate.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.0/MessMate.apk)** (Direct Download)
+            #### 📥 Direct APK Downloads:
+            - **[MessMate.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.0/MessMate.apk)**
             - **[MessMate-latest.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.0/MessMate-latest.apk)**
             
-            #### 🚀 How to Install:
-            1. Download `MessMate.apk` directly onto your Android device.
-            2. Tap the downloaded file and select **Install**.
+            #### 🚀 Installation Instructions:
+            1. Download `MessMate.apk` on your Android phone.
+            2. Tap the file in your notifications or Downloads folder to install.
+            3. Enjoy full offline and online mess tracking!
+          files: |
+            dist/MessMate.apk
+            dist/MessMate-latest.apk
+          draft: false
+          prerelease: false
             3. If prompted, allow "Install from unknown sources" for your browser/file manager.
             4. Open Mess Mate and enjoy campus nutrition tracking!
           files: |
