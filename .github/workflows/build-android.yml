@@ -69,12 +69,6 @@ jobs:
             #### 🚀 Installation Instructions:
             1. Download `MessMate.apk` on your Android phone.
             2. Tap the file in your notifications or Downloads folder to install.
-            3. Enjoy full offline and online mess tracking!
-          files: |
-            dist/MessMate.apk
-            dist/MessMate-latest.apk
-          draft: false
-          prerelease: false
             3. If prompted, allow "Install from unknown sources" for your browser/file manager.
             4. Open Mess Mate and enjoy campus nutrition tracking!
           files: |
