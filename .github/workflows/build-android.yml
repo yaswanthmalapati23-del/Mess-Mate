@@ -55,22 +55,22 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
         with:
-          tag_name: v1.0.0
-          name: 'Mess Mate Android App v1.0.0'
+          tag_name: v1.0.1
+          name: 'Mess Mate Android App v1.0.1'
           make_latest: true
           body: |
-            ### 📱 Mess Mate Android Application
-            Official Android release for **Mess Mate** — Intelligent Campus Nutrition for College Students.
+            ### 📱 Mess Mate Android Application (Full Vercel Edition)
+            Official Android release for **Mess Mate** — Complete Campus Nutrition, Real Food Court Outlets, Daily Menus & Fit Scores.
             
             #### 📥 Direct APK Downloads:
-            - **[MessMate.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.0/MessMate.apk)**
-            - **[MessMate-latest.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.0/MessMate-latest.apk)**
+            - **[MessMate.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.1/MessMate.apk)** (Latest v1.0.1)
+            - **[MessMate-latest.apk](https://github.com/yaswanthmalapati23-del/Mess-Mate/releases/download/v1.0.1/MessMate-latest.apk)**
             
             #### 🚀 Installation Instructions:
             1. Download `MessMate.apk` on your Android phone.
             2. Tap the file in your notifications or Downloads folder to install.
             3. If prompted, allow "Install from unknown sources" for your browser/file manager.
-            4. Open Mess Mate and enjoy campus nutrition tracking!
+            4. Open Mess Mate and enjoy the complete campus mess app!
           files: |
             dist/MessMate.apk
             dist/MessMate-latest.apk
