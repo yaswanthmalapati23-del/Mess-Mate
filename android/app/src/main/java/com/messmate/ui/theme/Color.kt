@@ -13,6 +13,7 @@ val TerracottaPrimary = Color(0xFFC85A32)
 val TerracottaLight = Color(0xFFE28267)
 val TerracottaDark = Color(0xFF89381F)
 val TerracottaGlow = Color(0x33C85A32)
+val TerracottaSurface = Color(0x26C85A32)
 
 // Muted Saffron (Protein, Highlights, Fit Scores)
 val SaffronPrimary = Color(0xFFE09F3E)
